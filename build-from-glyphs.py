@@ -132,7 +132,7 @@ def remove_corner_components(font):
     print(f"   Removed {removed_count} corner/smart components")
     return font
 
-def build_masters(glyphs_path, output_dir):
+def build_masters(glyphs_path, output_dir, timestamp=None):
     """Build each master separately from a .glyphs file"""
     print(f"📖 Loading {glyphs_path}...")
     
@@ -148,9 +148,12 @@ def build_masters(glyphs_path, output_dir):
     output_path = Path(output_dir) / "instance_ttf"
     output_path.mkdir(parents=True, exist_ok=True)
     
-    # Generate timestamp for this build
-    timestamp = get_timestamp()
-    print(f"⏰ Build timestamp: {timestamp}")
+    # Use provided timestamp or generate new one (for backward compatibility)
+    if timestamp is None:
+        timestamp = get_timestamp()
+        print(f"⏰ Build timestamp: {timestamp}")
+    else:
+        print(f"⏰ Using session timestamp: {timestamp}")
     
     # Build using fontmake
     print("🔨 Building fonts...")
@@ -225,12 +228,18 @@ if __name__ == '__main__':
     ]
     output_dir = 'build'
     
+    # Generate a single timestamp for this entire build session
+    build_timestamp = get_timestamp()
+    print(f"\n{'='*60}")
+    print(f"🕐 Build Session Timestamp: {build_timestamp}")
+    print(f"{'='*60}")
+    
     all_success = True
     for glyphs_file, variant_name in glyphs_files:
         print(f"\n{'='*60}")
         print(f"Building La Pomme - {variant_name}")
         print(f"{'='*60}")
-        success = build_masters(glyphs_file, output_dir)
+        success = build_masters(glyphs_file, output_dir, build_timestamp)
         all_success = all_success and success
     
     # After building all fonts, cleanup old versions and generate versions.json
