@@ -1,6 +1,6 @@
 [build]
   publish = "."
-  command = "echo 'No build needed - using pre-built fonts'"
+  command = "pip install -r requirements.txt && python3 build-from-glyphs.py"
 
 [[headers]]
   for = "/*"

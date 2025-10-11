@@ -174,6 +174,45 @@
             transform: translateY(1px);
         }
 
+        .version-item {
+            border: 1px solid #ddd;
+            padding: 8px;
+            background: #f9f9f9;
+        }
+
+        .version-item-name {
+            font-size: 9px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        .version-select {
+            width: 100%;
+            padding: 4px;
+            border: 1px solid black;
+            background: white;
+            font-family: monospace;
+            font-size: 9px;
+            margin-bottom: 5px;
+        }
+
+        .version-download-btn {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid black;
+            background: white;
+            cursor: pointer;
+            font-size: 9px;
+            font-family: monospace;
+            transition: all 0.1s;
+        }
+
+        .version-download-btn:hover {
+            background: black;
+            color: white;
+        }
+
         .upload-area {
             margin-top: 5px;
             border: 1px dashed black;
@@ -497,6 +536,13 @@
                 <label>DOWNLOAD FONTS</label>
                 <div id="downloadButtons" class="download-buttons">
                     <span style="font-size: 9px; color: #666;">Loading available fonts...</span>
+                </div>
+            </div>
+
+            <div class="control-group" id="versionSelectorGroup" style="display: none;">
+                <label>VERSION SELECTOR</label>
+                <div id="versionSelectors" style="display: grid; grid-template-columns: 1fr; gap: 10px;">
+                    <!-- Version selectors will be populated here -->
                 </div>
             </div>
 
@@ -1090,22 +1136,118 @@ abcdefghijklmnopqrstuvwxyz
         // Load and generate download buttons for available fonts
         async function loadDownloadButtons() {
             const downloadContainer = document.getElementById('downloadButtons');
+            const versionSelectorGroup = document.getElementById('versionSelectorGroup');
+            const versionSelectors = document.getElementById('versionSelectors');
             
-            // List of all potential font files
+            try {
+                // Try to load versions.json
+                const response = await fetch('build/versions.json');
+                if (response.ok) {
+                    const versions = await response.json();
+                    
+                    // Display quick download buttons for latest versions
+                    downloadContainer.innerHTML = '<div style="font-size: 9px; margin-bottom: 5px;">LATEST VERSIONS:</div>';
+                    
+                    const fontDisplayNames = {
+                        'DarumaPomme-Regular': 'Jardin Regular',
+                        'DarumaPomme-Italic': 'Jardin Italic',
+                        'Leafeon-Regular': 'Leafeon',
+                        'Pommiedemo2-Medium': 'Pommie'
+                    };
+                    
+                    // Create download buttons for latest versions
+                    for (const [baseName, versionList] of Object.entries(versions)) {
+                        if (versionList.length > 0) {
+                            const latest = versionList[0]; // First item is most recent
+                            const displayName = fontDisplayNames[baseName] || baseName;
+                            
+                            const button = document.createElement('a');
+                            button.href = latest.path;
+                            button.download = latest.filename;
+                            button.className = 'download-btn';
+                            button.textContent = `↓ ${displayName}`;
+                            downloadContainer.appendChild(button);
+                        }
+                    }
+                    
+                    // Create version selectors
+                    versionSelectors.innerHTML = '';
+                    for (const [baseName, versionList] of Object.entries(versions)) {
+                        if (versionList.length > 0) {
+                            const displayName = fontDisplayNames[baseName] || baseName;
+                            
+                            const versionItem = document.createElement('div');
+                            versionItem.className = 'version-item';
+                            
+                            const nameLabel = document.createElement('div');
+                            nameLabel.className = 'version-item-name';
+                            nameLabel.textContent = displayName.toUpperCase();
+                            versionItem.appendChild(nameLabel);
+                            
+                            // Create select dropdown
+                            const select = document.createElement('select');
+                            select.className = 'version-select';
+                            select.dataset.baseName = baseName;
+                            
+                            versionList.forEach((version, index) => {
+                                const option = document.createElement('option');
+                                option.value = index;
+                                option.textContent = version.date + (index === 0 ? ' (Latest)' : '');
+                                option.dataset.path = version.path;
+                                option.dataset.filename = version.filename;
+                                select.appendChild(option);
+                            });
+                            
+                            versionItem.appendChild(select);
+                            
+                            // Create download button
+                            const downloadBtn = document.createElement('button');
+                            downloadBtn.className = 'version-download-btn';
+                            downloadBtn.textContent = '↓ Download Selected Version';
+                            downloadBtn.onclick = function() {
+                                const selectedOption = select.options[select.selectedIndex];
+                                const path = selectedOption.dataset.path;
+                                const filename = selectedOption.dataset.filename;
+                                
+                                // Create temporary link and trigger download
+                                const a = document.createElement('a');
+                                a.href = path;
+                                a.download = filename;
+                                document.body.appendChild(a);
+                                a.click();
+                                document.body.removeChild(a);
+                            };
+                            
+                            versionItem.appendChild(downloadBtn);
+                            versionSelectors.appendChild(versionItem);
+                        }
+                    }
+                    
+                    // Show version selector group
+                    versionSelectorGroup.style.display = 'block';
+                    
+                    console.log(`✅ Loaded versions for ${Object.keys(versions).length} font(s)`);
+                } else {
+                    // versions.json not found, fall back to simple method
+                    console.log('⚠️ versions.json not found, using fallback method');
+                    await loadDownloadButtonsFallback();
+                }
+            } catch (e) {
+                console.error('Error loading versions:', e);
+                await loadDownloadButtonsFallback();
+            }
+        }
+        
+        // Fallback method for loading fonts without versions.json
+        async function loadDownloadButtonsFallback() {
+            const downloadContainer = document.getElementById('downloadButtons');
+            
+            // List of all potential font files (latest versions)
             const potentialFonts = [
-                // TTF files from build
                 { path: 'build/instance_ttf/DarumaPomme-Regular.ttf', name: 'Jardin Regular', format: 'TTF' },
                 { path: 'build/instance_ttf/DarumaPomme-Italic.ttf', name: 'Jardin Italic', format: 'TTF' },
                 { path: 'build/instance_ttf/Leafeon-Regular.ttf', name: 'Leafeon', format: 'TTF' },
-                { path: 'build/instance_ttf/Pommiedemo2-Medium.ttf', name: 'Pommie', format: 'TTF' },
-                // OTF files from src (common naming patterns)
-                { path: 'src/DarumaPomme-Regular.otf', name: 'Jardin Regular', format: 'OTF' },
-                { path: 'src/DarumaPomme-Italic.otf', name: 'Jardin Italic', format: 'OTF' },
-                { path: 'src/Leafeon-Regular.otf', name: 'Leafeon', format: 'OTF' },
-                { path: 'src/Pommiedemo2-Medium.otf', name: 'Pommie', format: 'OTF' },
-                { path: 'src/jardin.otf', name: 'Jardin', format: 'OTF' },
-                { path: 'src/leafeon.otf', name: 'Leafeon', format: 'OTF' },
-                { path: 'src/pommie.otf', name: 'Pommie', format: 'OTF' }
+                { path: 'build/instance_ttf/Pommiedemo2-Medium.ttf', name: 'Pommie', format: 'TTF' }
             ];
 
             const availableFonts = [];
@@ -1113,13 +1255,11 @@ abcdefghijklmnopqrstuvwxyz
             // Check which fonts actually exist by trying to load them
             for (const font of potentialFonts) {
                 try {
-                    // Try to load the font file - if it fails, the file doesn't exist
                     const testFont = new FontFace(`Test-${font.name}`, `url(${font.path})`);
                     await testFont.load();
                     availableFonts.push(font);
                     console.log(`✅ Found: ${font.name} (${font.format})`);
                 } catch (e) {
-                    // Font file doesn't exist or failed to load
                     console.log(`⏭️ Skipped: ${font.name} (${font.format}) - not found`);
                 }
             }
