@@ -48,7 +48,7 @@ python3 build-from-glyphs.py
 
 This will build all three La Pomme variants from the glyphs files in the `src/` directory:
 - **Jardin** (from `jardin.glyphs`) → DarumaPomme-Regular.ttf, DarumaPomme-Italic.ttf
-- **Leafeon** (from `leafeon.glyphs`) → Leafeon-Medium.ttf
+- **Leafeon** (from `leafeon.glyphs`) → Leafeon-Regular.ttf
 - **Pommie** (from `pommie.glyphs`) → Pommiedemo2-Medium.ttf
 
 The generated fonts will be in `build/instance_ttf/`.
