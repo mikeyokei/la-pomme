@@ -583,6 +583,16 @@
                     </select>
                 </div>
 
+                <div class="control-group" id="versionTestGroup" style="display: none;">
+                    <label>TEST VERSION</label>
+                    <select id="versionTestSelect" style="width: 100%; padding: 4px; border: 1px solid black; background: white; font-family: monospace; font-size: 9px; margin-bottom: 5px;">
+                        <option value="">Latest (Current)</option>
+                    </select>
+                    <button id="loadVersionBtn" style="width: 100%; padding: 5px; border: 1px solid black; background: white; cursor: pointer; font-size: 9px; font-family: monospace; transition: all 0.1s;" onmouseover="this.style.background='black'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='black'">
+                        LOAD SELECTED VERSION
+                    </button>
+                </div>
+
                 <div class="control-group">
                     <label>UPLOAD & TEST FONT</label>
                     <div class="upload-area" id="uploadArea">
@@ -815,6 +825,8 @@ abcdefghijklmnopqrstuvwxyz
         let currentMaster = null;
         let loadedFonts = {};
         let uploadedFonts = [];
+        let availableVersions = {}; // Store versions data
+        let currentVersionPath = null; // Track currently loaded version
 
         // View switching
         viewButtons.forEach(button => {
@@ -1138,6 +1150,7 @@ abcdefghijklmnopqrstuvwxyz
             if (selectedMaster && loadedFonts[selectedMaster]) {
                 currentMaster = selectedMaster;
                 applyStyles();
+                updateVersionTestSelector(); // Update version selector when master changes
                 console.log(`Switched to: ${selectedMaster}`);
             }
         });
@@ -1278,6 +1291,9 @@ abcdefghijklmnopqrstuvwxyz
                 if (response.ok) {
                     const versions = await response.json();
                     
+                    // Store versions globally for version testing
+                    availableVersions = versions;
+                    
                     // Display quick download buttons for latest versions
                     downloadContainer.innerHTML = '<div style="font-size: 9px; margin-bottom: 5px;">LATEST VERSIONS:</div>';
                     
@@ -1359,6 +1375,9 @@ abcdefghijklmnopqrstuvwxyz
                     // Show version selector group
                     versionSelectorGroup.style.display = 'block';
                     
+                    // Update version test selector if a master is already selected
+                    updateVersionTestSelector();
+                    
                     console.log(`✅ Loaded versions for ${Object.keys(versions).length} font(s)`);
                 } else {
                     // versions.json not found, fall back to simple method
@@ -1437,6 +1456,97 @@ abcdefghijklmnopqrstuvwxyz
                 toggle.classList.toggle('collapsed');
             }
         }
+
+        // Map master file names to base font names for versions
+        function getMasterBaseName(masterFile) {
+            const mapping = {
+                'DarumaPomme-Regular.ttf': 'DarumaPomme-Regular',
+                'DarumaPomme-Italic.ttf': 'DarumaPomme-Italic',
+                'Leafeon-Regular.ttf': 'Leafeon-Regular',
+                'Pommiedemo2-Medium.ttf': 'Pommiedemo2-Medium'
+            };
+            return mapping[masterFile] || null;
+        }
+
+        // Populate version selector based on current master
+        function updateVersionTestSelector() {
+            const versionTestGroup = document.getElementById('versionTestGroup');
+            const versionTestSelect = document.getElementById('versionTestSelect');
+            
+            if (!currentMaster || Object.keys(availableVersions).length === 0) {
+                versionTestGroup.style.display = 'none';
+                return;
+            }
+            
+            // Get base name for current master
+            const baseName = getMasterBaseName(currentMaster);
+            
+            if (!baseName || !availableVersions[baseName]) {
+                versionTestGroup.style.display = 'none';
+                return;
+            }
+            
+            // Show version selector
+            versionTestGroup.style.display = 'block';
+            
+            // Populate dropdown with versions
+            const versions = availableVersions[baseName];
+            versionTestSelect.innerHTML = '<option value="">Latest (Current)</option>';
+            
+            versions.forEach((version, index) => {
+                const option = document.createElement('option');
+                option.value = version.path;
+                option.textContent = version.date + (index === 0 ? ' (Latest)' : '');
+                versionTestSelect.appendChild(option);
+            });
+            
+            console.log(`Version selector updated for ${baseName}: ${versions.length} versions available`);
+        }
+
+        // Load selected version for testing
+        async function loadSelectedVersion() {
+            const versionTestSelect = document.getElementById('versionTestSelect');
+            const selectedPath = versionTestSelect.value;
+            
+            if (!selectedPath) {
+                // Revert to current master (latest version)
+                if (currentMaster && loadedFonts[currentMaster]) {
+                    applyStyles();
+                    console.log('Reverted to latest version');
+                }
+                return;
+            }
+            
+            try {
+                // Extract filename from path
+                const filename = selectedPath.split('/').pop();
+                const fontName = `TestVersion-${filename}`;
+                
+                // Load the font file
+                const fontFace = new FontFace(fontName, `url(${selectedPath})`);
+                await fontFace.load();
+                document.fonts.add(fontFace);
+                
+                // Apply the font to test areas
+                customText.style.fontFamily = `'${fontName}', monospace`;
+                samplesView.style.fontFamily = `'${fontName}', monospace`;
+                gridView.style.fontFamily = `'${fontName}', monospace`;
+                
+                currentVersionPath = selectedPath;
+                console.log(`Loaded version for testing: ${filename}`);
+                
+                // Get selected option text for display
+                const selectedOption = versionTestSelect.options[versionTestSelect.selectedIndex];
+                alert(`Version loaded: ${selectedOption.textContent}`);
+                
+            } catch (error) {
+                console.error('Error loading version:', error);
+                alert('Failed to load selected version. Please try again.');
+            }
+        }
+
+        // Add event listener for load version button
+        document.getElementById('loadVersionBtn').addEventListener('click', loadSelectedVersion);
 
         // Toggle left panel
         function toggleLeftPanel() {
