@@ -13,6 +13,24 @@
     Content-Type = "font/ttf"
     Access-Control-Allow-Origin = "*"
 
+[[headers]]
+  for = "*.otf"
+  [headers.values]
+    Content-Type = "font/otf"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "*.woff"
+  [headers.values]
+    Content-Type = "font/woff"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "*.woff2"
+  [headers.values]
+    Content-Type = "font/woff2"
+    Access-Control-Allow-Origin = "*"
+
 [[redirects]]
   from = "/"
   to = "/font-tester.html"
