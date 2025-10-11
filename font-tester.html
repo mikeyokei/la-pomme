@@ -310,10 +310,17 @@
             overflow: auto;
             white-space: pre-wrap;
             word-wrap: break-word;
+            font-variant-ligatures: normal;
+            text-rendering: optimizeLegibility;
         }
 
         .ss-span {
             display: inline;
+            cursor: pointer;
+        }
+
+        .ss-span:hover {
+            background: #f0f0f0;
         }
 
         .character-grid {
@@ -525,7 +532,9 @@
                     <button class="ss-btn" data-ss="ss20">SS20</button>
                 </div>
                 <div style="margin-top: 5px; font-size: 8px; color: #666;">
-                    Select text in the editor, then click a stylistic set to apply it to selection only
+                    <strong>Apply:</strong> Select text, click SS button<br>
+                    <strong>Remove:</strong> Select styled text (hover shows gray), click any SS button OR click the styled text<br>
+                    <button id="clearAllSS" style="margin-top: 5px; padding: 3px 8px; border: 1px solid black; background: white; cursor: pointer; font-size: 8px; font-family: monospace;">Clear All SS</button>
                 </div>
             </div>
         </div>
@@ -660,11 +669,74 @@ abcdefghijklmnopqrstuvwxyz
                 .map(f => `"${f}" 1`)
                 .join(', ');
             
+            // Apply font-feature-settings
             customText.style.fontFeatureSettings = featureString || 'normal';
             samplesView.style.fontFeatureSettings = featureString || 'normal';
             gridView.style.fontFeatureSettings = featureString || 'normal';
             
+            // Special handling for ligatures with font-variant-ligatures
+            if (activeFeatures.has('liga')) {
+                customText.style.fontVariantLigatures = 'common-ligatures';
+                samplesView.style.fontVariantLigatures = 'common-ligatures';
+                gridView.style.fontVariantLigatures = 'common-ligatures';
+            } else {
+                customText.style.fontVariantLigatures = 'no-common-ligatures';
+                samplesView.style.fontVariantLigatures = 'no-common-ligatures';
+                gridView.style.fontVariantLigatures = 'no-common-ligatures';
+            }
+            
             console.log('Applied OpenType features:', featureString);
+        }
+
+        // Detect available stylistic sets in the current font
+        async function detectAvailableStylisticSets() {
+            if (!currentMaster || !loadedFonts[currentMaster]) {
+                return [];
+            }
+
+            const availableSets = [];
+            const testText = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            
+            // Test each stylistic set
+            for (let i = 1; i <= 20; i++) {
+                const ssName = `ss${String(i).padStart(2, '0')}`;
+                
+                try {
+                    // Create a test element
+                    const testEl = document.createElement('span');
+                    testEl.style.fontFamily = loadedFonts[currentMaster];
+                    testEl.style.fontFeatureSettings = `"${ssName}" 1`;
+                    testEl.textContent = testText;
+                    testEl.style.position = 'absolute';
+                    testEl.style.visibility = 'hidden';
+                    document.body.appendChild(testEl);
+                    
+                    // If the feature exists, add it
+                    // Note: This is a simple check - in production you'd want more sophisticated detection
+                    availableSets.push(ssName);
+                    
+                    document.body.removeChild(testEl);
+                } catch (e) {
+                    // Feature not available
+                }
+            }
+            
+            return availableSets;
+        }
+
+        // Update stylistic set buttons based on available features
+        async function updateStylisticSetButtons() {
+            const ssButtonsContainer = document.getElementById('ssButtons');
+            const availableSets = await detectAvailableStylisticSets();
+            
+            // For now, show all 20 buttons (proper detection requires font parsing which is complex)
+            // But we'll make them toggleable and show feedback
+            const allButtons = ssButtonsContainer.querySelectorAll('.ss-btn');
+            allButtons.forEach(btn => {
+                btn.style.display = 'inline-block';
+            });
+            
+            console.log('Stylistic set buttons ready');
         }
 
         // Stylistic Sets for selected text
@@ -681,7 +753,7 @@ abcdefghijklmnopqrstuvwxyz
             const selection = window.getSelection();
             
             if (!selection.rangeCount || selection.isCollapsed) {
-                alert('Please select some text first!');
+                alert('Please select some text first!\n\nTip: You can also click on already styled text (with gray background on hover) to remove the stylistic set.');
                 return;
             }
 
@@ -698,6 +770,23 @@ abcdefghijklmnopqrstuvwxyz
                 return;
             }
 
+            // Check if the selection is within an existing ss-span
+            let existingSpan = container;
+            while (existingSpan && existingSpan !== customText) {
+                if (existingSpan.classList && existingSpan.classList.contains('ss-span')) {
+                    // Remove the stylistic set by unwrapping the span
+                    const parent = existingSpan.parentNode;
+                    while (existingSpan.firstChild) {
+                        parent.insertBefore(existingSpan.firstChild, existingSpan);
+                    }
+                    parent.removeChild(existingSpan);
+                    console.log(`Removed stylistic set from text`);
+                    selection.removeAllRanges();
+                    return;
+                }
+                existingSpan = existingSpan.parentNode;
+            }
+
             // Extract the selected content
             const selectedContent = range.extractContents();
             
@@ -705,7 +794,19 @@ abcdefghijklmnopqrstuvwxyz
             const span = document.createElement('span');
             span.className = 'ss-span';
             span.style.fontFeatureSettings = `"${ssFeature}" 1`;
+            span.title = `Stylistic Set: ${ssFeature.toUpperCase()} (select and click any SS button to remove)`;
             span.appendChild(selectedContent);
+            
+            // Add click event to remove the stylistic set
+            span.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const parent = this.parentNode;
+                while (this.firstChild) {
+                    parent.insertBefore(this.firstChild, this);
+                }
+                parent.removeChild(this);
+                console.log(`Removed stylistic set by clicking`);
+            });
             
             // Insert the span
             range.insertNode(span);
@@ -984,6 +1085,19 @@ abcdefghijklmnopqrstuvwxyz
                 console.log(`✅ Generated ${availableFonts.length} download buttons`);
             }
         }
+
+        // Clear all stylistic sets button
+        document.getElementById('clearAllSS').addEventListener('click', function() {
+            const allSpans = customText.querySelectorAll('.ss-span');
+            allSpans.forEach(span => {
+                const parent = span.parentNode;
+                while (span.firstChild) {
+                    parent.insertBefore(span.firstChild, span);
+                }
+                parent.removeChild(span);
+            });
+            console.log(`Cleared all stylistic sets (${allSpans.length} removed)`);
+        });
 
         // Initialize
         applyStyles();

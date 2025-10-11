@@ -84,17 +84,22 @@ Toggle these features on/off to see their effect across all text:
 - **Old Style Figures (onum)** - Old-style numbers
 
 ### Stylistic Sets (Apply to selected text only)
+**To Apply:**
 1. **Select text** in the custom text editor
 2. **Click a stylistic set button** (SS01-SS20)
 3. The stylistic set will be applied **only to your selection**
 4. Different parts of your text can have different stylistic sets!
 
+**To Remove:**
+- **Method 1:** Select the styled text (hover shows gray background), then click any SS button
+- **Method 2:** Click directly on the styled text to remove it
+- **Method 3:** Click "Clear All SS" button to remove all stylistic sets at once
+
 **Example workflow:**
 - Type "Hello World"
-- Select "Hello"
-- Click "SS01" to apply the first stylistic set to only "Hello"
-- Select "World" 
-- Click "SS02" to apply a different set to "World"
+- Select "Hello", click "SS01" (applies first stylistic set)
+- Select "World", click "SS02" (applies different set)
+- To remove: Click on "Hello" text OR select it and click any SS button
 
 ## Font Distribution
 
