@@ -56,6 +56,9 @@
             margin-bottom: 10px;
             border-bottom: 1px solid black;
             padding-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .header h1 {
@@ -64,10 +67,59 @@
             letter-spacing: 1px;
         }
 
+        .toggle-left-panel-btn {
+            padding: 3px 8px;
+            border: 1px solid black;
+            background: white;
+            cursor: pointer;
+            font-size: 9px;
+            font-family: monospace;
+            transition: all 0.1s;
+        }
+
+        .toggle-left-panel-btn:hover {
+            background: black;
+            color: white;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 10px;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .left-panel {
+            width: 280px;
+            border: 1px solid black;
+            padding: 10px;
+            overflow-y: auto;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            background: white;
+        }
+
+        .left-panel.collapsed {
+            transform: translateX(-100%);
+            opacity: 0;
+            width: 0;
+            padding: 0;
+            border: none;
+            overflow: hidden;
+        }
+
+        .right-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
         .controls-panel {
             border: 1px solid black;
             padding: 10px;
             margin-bottom: 10px;
+            overflow-y: auto;
+            max-height: 40vh;
         }
 
         .control-group {
@@ -485,7 +537,25 @@
             overflow: visible;
         }
 
+        .left-panel .control-group label {
+            font-size: 9px;
+        }
+
         @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+
+            .left-panel {
+                width: 100%;
+                max-height: 40vh;
+            }
+
+            .left-panel.collapsed {
+                max-height: 0;
+                transform: translateY(-100%);
+            }
+            
             .control-row {
                 grid-template-columns: 1fr;
             }
@@ -500,37 +570,30 @@
     <div class="container">
         <div class="header">
             <h1>LA POMME FONT TESTER</h1>
+            <button class="toggle-left-panel-btn" onclick="toggleLeftPanel()">TOGGLE CONTROLS</button>
         </div>
 
-        <div class="controls-panel">
-            <div class="control-group">
-                <label>MASTER</label>
-                <select id="masterSelect" style="width: 100%; padding: 4px; border: 1px solid black; background: white; font-family: monospace; font-size: 9px;">
-                    <option value="">Loading masters...</option>
-                </select>
-            </div>
-
-            <div class="control-group">
-                <label>UPLOAD & TEST FONT</label>
-                <div class="upload-area" id="uploadArea">
-                    <input type="file" id="fontUpload" class="upload-input" accept=".ttf,.otf,.woff,.woff2" multiple>
-                    <label for="fontUpload" class="upload-label">
-                        CLICK OR DRAG & DROP FONT FILES HERE<br>
-                        <span style="font-size: 8px; color: #666;">(TTF, OTF, WOFF, WOFF2)</span>
-                    </label>
+        <div class="main-content">
+            <!-- Left Panel: Typography Controls -->
+            <div class="left-panel" id="leftPanel">
+                <div class="control-group">
+                    <label>MASTER</label>
+                    <select id="masterSelect" style="width: 100%; padding: 4px; border: 1px solid black; background: white; font-family: monospace; font-size: 9px;">
+                        <option value="">Loading masters...</option>
+                    </select>
                 </div>
-            </div>
 
-            <div class="control-group">
-                <label>VIEW</label>
-                <div class="view-toggle">
-                    <button class="view-btn active" data-view="custom">CUSTOM</button>
-                    <button class="view-btn" data-view="samples">SAMPLES</button>
-                    <button class="view-btn" data-view="grid">GRID</button>
+                <div class="control-group">
+                    <label>UPLOAD & TEST FONT</label>
+                    <div class="upload-area" id="uploadArea">
+                        <input type="file" id="fontUpload" class="upload-input" accept=".ttf,.otf,.woff,.woff2" multiple>
+                        <label for="fontUpload" class="upload-label">
+                            CLICK OR DRAG & DROP FONT FILES HERE<br>
+                            <span style="font-size: 8px; color: #666;">(TTF, OTF, WOFF, WOFF2)</span>
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="control-row">
                 <div class="control-group">
                     <label>
                         SIZE
@@ -549,15 +612,27 @@
 
                 <div class="control-group">
                     <label>
-                        LINE
+                        LINE HEIGHT
                         <span class="slider-value" id="lineHeightValue">1.5</span>
                     </label>
                     <input type="range" id="lineHeight" min="0.8" max="2.5" value="1.5" step="0.1">
                 </div>
             </div>
 
-            <div class="control-group">
-                <label>PRESET</label>
+            <!-- Right Content: Controls & Test Area -->
+            <div class="right-content">
+                <div class="controls-panel">
+                    <div class="control-group">
+                        <label>VIEW</label>
+                        <div class="view-toggle">
+                            <button class="view-btn active" data-view="custom">CUSTOM</button>
+                            <button class="view-btn" data-view="samples">SAMPLES</button>
+                            <button class="view-btn" data-view="grid">GRID</button>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>PRESET</label>
                 <div class="preset-buttons">
                     <button class="preset-btn" data-text="The quick brown fox jumps over the lazy dog">PANGRAM</button>
                     <button class="preset-btn" data-text="ABCDEFGHIJKLMNOPQRSTUVWXYZ">ABC</button>
@@ -700,6 +775,8 @@ abcdefghijklmnopqrstuvwxyz
             <!-- Character Grid View -->
             <div id="gridView" class="character-grid">
                 <!-- JavaScript will populate this -->
+            </div>
+        </div>
             </div>
         </div>
     </div>
@@ -1348,6 +1425,14 @@ abcdefghijklmnopqrstuvwxyz
             if (content && toggle) {
                 content.classList.toggle('collapsed');
                 toggle.classList.toggle('collapsed');
+            }
+        }
+
+        // Toggle left panel
+        function toggleLeftPanel() {
+            const leftPanel = document.getElementById('leftPanel');
+            if (leftPanel) {
+                leftPanel.classList.toggle('collapsed');
             }
         }
 
