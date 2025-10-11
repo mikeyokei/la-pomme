@@ -5,7 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Pomme Font Tester</title>
     <style>
-        /* Font faces will be loaded dynamically via JavaScript */
+        /* Font faces - preload for better iOS compatibility */
+        @font-face {
+            font-family: 'LaPomme-DarumaPomme-Regular';
+            src: url('build/instance_ttf/DarumaPomme-Regular.ttf') format('truetype');
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: 'LaPomme-DarumaPomme-Italic';
+            src: url('build/instance_ttf/DarumaPomme-Italic.ttf') format('truetype');
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: 'LaPomme-Leafeon-Regular';
+            src: url('build/instance_ttf/Leafeon-Regular.ttf') format('truetype');
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: 'LaPomme-Pommiedemo2-Medium';
+            src: url('build/instance_ttf/Pommiedemo2-Medium.ttf') format('truetype');
+            font-display: swap;
+        }
 
         * {
             margin: 0;
@@ -852,56 +875,60 @@ abcdefghijklmnopqrstuvwxyz
         // Load available masters from build directory
         async function loadAvailableMasters() {
             const possibleMasters = [
-                { file: 'DarumaPomme-Regular.ttf', name: 'JARDIN (REGULAR)' },
-                { file: 'DarumaPomme-Italic.ttf', name: 'JARDIN (ITALIC)' },
-                { file: 'Leafeon-Regular.ttf', name: 'LEAFEON' },
-                { file: 'Pommiedemo2-Medium.ttf', name: 'POMMIE' }
+                { file: 'DarumaPomme-Regular.ttf', name: 'JARDIN (REGULAR)', fontFamily: 'LaPomme-DarumaPomme-Regular' },
+                { file: 'DarumaPomme-Italic.ttf', name: 'JARDIN (ITALIC)', fontFamily: 'LaPomme-DarumaPomme-Italic' },
+                { file: 'Leafeon-Regular.ttf', name: 'LEAFEON', fontFamily: 'LaPomme-Leafeon-Regular' },
+                { file: 'Pommiedemo2-Medium.ttf', name: 'POMMIE', fontFamily: 'LaPomme-Pommiedemo2-Medium' }
             ];
 
             const availableMasters = [];
             
             console.log('🔍 Loading fonts from:', window.location.origin);
+            console.log('📱 Device:', navigator.userAgent);
             
-            // Try to load each font
+            // Wait for fonts to load (they're defined in CSS @font-face)
+            // This works better on iOS than using FontFace API
+            if (document.fonts && document.fonts.ready) {
+                try {
+                    await document.fonts.ready;
+                    console.log('✅ Document fonts ready');
+                } catch (e) {
+                    console.warn('Fonts.ready failed:', e);
+                }
+            }
+            
+            // Check each font and add to available list
             for (const master of possibleMasters) {
                 try {
-                    // Try relative path first (for local and Netlify)
-                    const relativePath = `build/instance_ttf/${master.file}`;
-                    console.log(`Trying: ${relativePath}`);
+                    // Check if font is available using CSS @font-face
+                    const testText = 'abcdefghijklmnopqrstuvwxyz';
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
                     
-                    const fontFace = new FontFace(
-                        `LaPomme-${master.file}`, 
-                        `url(${relativePath})`,
-                        { display: 'swap' }
-                    );
+                    // Test with fallback font
+                    ctx.font = '72px monospace';
+                    const fallbackWidth = ctx.measureText(testText).width;
                     
-                    await fontFace.load();
-                    document.fonts.add(fontFace);
-                    availableMasters.push(master);
-                    loadedFonts[master.file] = `LaPomme-${master.file}`;
-                    console.log(`✅ Loaded: ${master.name}`);
-                } catch (e) {
-                    console.warn(`Failed with relative path: ${e.message}`);
+                    // Test with our font
+                    ctx.font = `72px "${master.fontFamily}", monospace`;
+                    const testWidth = ctx.measureText(testText).width;
                     
-                    // Try with absolute path as fallback
-                    try {
-                        const absolutePath = `${window.location.origin}/build/instance_ttf/${master.file}`;
-                        console.log(`Retrying with: ${absolutePath}`);
-                        
-                        const fontFace = new FontFace(
-                            `LaPomme-${master.file}`, 
-                            `url(${absolutePath})`,
-                            { display: 'swap' }
-                        );
-                        
-                        await fontFace.load();
-                        document.fonts.add(fontFace);
+                    // If widths are different, font loaded successfully
+                    if (Math.abs(testWidth - fallbackWidth) > 1) {
                         availableMasters.push(master);
-                        loadedFonts[master.file] = `LaPomme-${master.file}`;
-                        console.log(`✅ Loaded with absolute path: ${master.name}`);
-                    } catch (e2) {
-                        console.error(`❌ Failed to load ${master.name}:`, e2);
+                        loadedFonts[master.file] = master.fontFamily;
+                        console.log(`✅ Loaded: ${master.name} (${master.fontFamily})`);
+                    } else {
+                        // Font might still be loading, add it anyway (CSS will handle it)
+                        availableMasters.push(master);
+                        loadedFonts[master.file] = master.fontFamily;
+                        console.log(`⏳ Added: ${master.name} (loading...)`);
                     }
+                } catch (e) {
+                    console.error(`❌ Error checking ${master.name}:`, e);
+                    // Add it anyway - CSS will handle loading
+                    availableMasters.push(master);
+                    loadedFonts[master.file] = master.fontFamily;
                 }
             }
 
@@ -909,11 +936,6 @@ abcdefghijklmnopqrstuvwxyz
                 masterSelect.innerHTML = '<option value="">⚠️ No fonts loaded - Check console</option>';
                 console.error('❌ FONT LOADING FAILED');
                 console.error('Current URL:', window.location.href);
-                console.error('Expected fonts at:', `${window.location.origin}/build/instance_ttf/`);
-                console.error('Please check:');
-                console.error('1. Font files are deployed');
-                console.error('2. Path is correct');
-                console.error('3. CORS headers are set');
                 return;
             }
 
