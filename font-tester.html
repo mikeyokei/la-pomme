@@ -668,63 +668,73 @@
             </div>
 
             <div class="control-group">
-                <label>OPENTYPE FEATURES</label>
-                <div class="opentype-grid">
-                    <div class="ot-feature">
-                        <input type="checkbox" id="liga" checked>
-                        <label for="liga">Ligatures</label>
-                    </div>
-                    <div class="ot-feature">
-                        <input type="checkbox" id="calt" checked>
-                        <label for="calt">Contextual</label>
-                    </div>
-                    <div class="ot-feature">
-                        <input type="checkbox" id="dlig">
-                        <label for="dlig">Discret. Lig</label>
-                    </div>
-                    <div class="ot-feature">
-                        <input type="checkbox" id="swsh">
-                        <label for="swsh">Swash</label>
-                    </div>
-                    <div class="ot-feature">
-                        <input type="checkbox" id="smcp">
-                        <label for="smcp">Small Caps</label>
-                    </div>
-                    <div class="ot-feature">
-                        <input type="checkbox" id="onum">
-                        <label for="onum">Old Style</label>
+                <div class="collapsible-header" onclick="toggleCollapse('opentypeSection')">
+                    <label style="margin: 0; cursor: pointer;">OPENTYPE FEATURES</label>
+                    <span class="collapse-toggle" id="opentypeSection-toggle">▼</span>
+                </div>
+                <div id="opentypeSection" class="collapsible-content collapsed">
+                    <div class="opentype-grid">
+                        <div class="ot-feature">
+                            <input type="checkbox" id="liga" checked>
+                            <label for="liga">Ligatures</label>
+                        </div>
+                        <div class="ot-feature">
+                            <input type="checkbox" id="calt" checked>
+                            <label for="calt">Contextual</label>
+                        </div>
+                        <div class="ot-feature">
+                            <input type="checkbox" id="dlig">
+                            <label for="dlig">Discret. Lig</label>
+                        </div>
+                        <div class="ot-feature">
+                            <input type="checkbox" id="swsh">
+                            <label for="swsh">Swash</label>
+                        </div>
+                        <div class="ot-feature">
+                            <input type="checkbox" id="smcp">
+                            <label for="smcp">Small Caps</label>
+                        </div>
+                        <div class="ot-feature">
+                            <input type="checkbox" id="onum">
+                            <label for="onum">Old Style</label>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="control-group">
-                <label>STYLISTIC SETS (SELECT TEXT FIRST)</label>
-                <div class="ss-buttons" id="ssButtons">
-                    <button class="ss-btn" data-ss="ss01">SS01</button>
-                    <button class="ss-btn" data-ss="ss02">SS02</button>
-                    <button class="ss-btn" data-ss="ss03">SS03</button>
-                    <button class="ss-btn" data-ss="ss04">SS04</button>
-                    <button class="ss-btn" data-ss="ss05">SS05</button>
-                    <button class="ss-btn" data-ss="ss06">SS06</button>
-                    <button class="ss-btn" data-ss="ss07">SS07</button>
-                    <button class="ss-btn" data-ss="ss08">SS08</button>
-                    <button class="ss-btn" data-ss="ss09">SS09</button>
-                    <button class="ss-btn" data-ss="ss10">SS10</button>
-                    <button class="ss-btn" data-ss="ss11">SS11</button>
-                    <button class="ss-btn" data-ss="ss12">SS12</button>
-                    <button class="ss-btn" data-ss="ss13">SS13</button>
-                    <button class="ss-btn" data-ss="ss14">SS14</button>
-                    <button class="ss-btn" data-ss="ss15">SS15</button>
-                    <button class="ss-btn" data-ss="ss16">SS16</button>
-                    <button class="ss-btn" data-ss="ss17">SS17</button>
-                    <button class="ss-btn" data-ss="ss18">SS18</button>
-                    <button class="ss-btn" data-ss="ss19">SS19</button>
-                    <button class="ss-btn" data-ss="ss20">SS20</button>
+                <div class="collapsible-header" onclick="toggleCollapse('stylisticSetsSection')">
+                    <label style="margin: 0; cursor: pointer;">STYLISTIC SETS (SELECT TEXT FIRST)</label>
+                    <span class="collapse-toggle" id="stylisticSetsSection-toggle">▼</span>
                 </div>
-                <div style="margin-top: 5px; font-size: 8px; color: #666;">
-                    <strong>Apply:</strong> Select text, click SS button<br>
-                    <strong>Remove:</strong> Select styled text (hover shows gray), click any SS button OR click the styled text<br>
-                    <button id="clearAllSS" style="margin-top: 5px; padding: 3px 8px; border: 1px solid black; background: white; cursor: pointer; font-size: 8px; font-family: monospace;">Clear All SS</button>
+                <div id="stylisticSetsSection" class="collapsible-content collapsed">
+                    <div class="ss-buttons" id="ssButtons">
+                        <button class="ss-btn" data-ss="ss01">SS01</button>
+                        <button class="ss-btn" data-ss="ss02">SS02</button>
+                        <button class="ss-btn" data-ss="ss03">SS03</button>
+                        <button class="ss-btn" data-ss="ss04">SS04</button>
+                        <button class="ss-btn" data-ss="ss05">SS05</button>
+                        <button class="ss-btn" data-ss="ss06">SS06</button>
+                        <button class="ss-btn" data-ss="ss07">SS07</button>
+                        <button class="ss-btn" data-ss="ss08">SS08</button>
+                        <button class="ss-btn" data-ss="ss09">SS09</button>
+                        <button class="ss-btn" data-ss="ss10">SS10</button>
+                        <button class="ss-btn" data-ss="ss11">SS11</button>
+                        <button class="ss-btn" data-ss="ss12">SS12</button>
+                        <button class="ss-btn" data-ss="ss13">SS13</button>
+                        <button class="ss-btn" data-ss="ss14">SS14</button>
+                        <button class="ss-btn" data-ss="ss15">SS15</button>
+                        <button class="ss-btn" data-ss="ss16">SS16</button>
+                        <button class="ss-btn" data-ss="ss17">SS17</button>
+                        <button class="ss-btn" data-ss="ss18">SS18</button>
+                        <button class="ss-btn" data-ss="ss19">SS19</button>
+                        <button class="ss-btn" data-ss="ss20">SS20</button>
+                    </div>
+                    <div style="margin-top: 5px; font-size: 8px; color: #666;">
+                        <strong>Apply:</strong> Select text, click SS button<br>
+                        <strong>Remove:</strong> Select styled text (hover shows gray), click any SS button OR click the styled text<br>
+                        <button id="clearAllSS" style="margin-top: 5px; padding: 3px 8px; border: 1px solid black; background: white; cursor: pointer; font-size: 8px; font-family: monospace;">Clear All SS</button>
+                    </div>
                 </div>
             </div>
         </div>
