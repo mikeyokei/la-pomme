@@ -1,0 +1,20 @@
+[build]
+  publish = "."
+  command = "echo 'No build needed - using pre-built fonts'"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    
+[[headers]]
+  for = "*.ttf"
+  [headers.values]
+    Content-Type = "font/ttf"
+    Access-Control-Allow-Origin = "*"
+
+[[redirects]]
+  from = "/"
+  to = "/font-tester.html"
+  status = 200
+

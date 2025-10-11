@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Pomme Font Tester</title>
+    <style>
+        /* Font faces will be loaded dynamically via JavaScript */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: monospace;
+            background: white;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: left;
+            margin-bottom: 10px;
+            border-bottom: 1px solid black;
+            padding-bottom: 5px;
+        }
+
+        .header h1 {
+            font-size: 14px;
+            font-weight: normal;
+            letter-spacing: 1px;
+        }
+
+        .controls-panel {
+            border: 1px solid black;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .control-group {
+            margin-bottom: 10px;
+        }
+
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 10px;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .control-group input[type="range"] {
+            width: 100%;
+            height: 2px;
+            background: black;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .control-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 8px;
+            height: 8px;
+            background: white;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+
+        .control-group input[type="range"]::-moz-range-thumb {
+            width: 8px;
+            height: 8px;
+            background: white;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+
+        .control-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .slider-value {
+            display: inline-block;
+            margin-left: 5px;
+            font-size: 10px;
+        }
+
+        .preset-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .preset-btn {
+            padding: 3px 8px;
+            border: 1px solid black;
+            background: white;
+            cursor: pointer;
+            font-size: 9px;
+            font-family: monospace;
+            transition: all 0.1s;
+        }
+
+        .preset-btn:hover {
+            background: black;
+            color: white;
+        }
+
+        .download-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .download-btn {
+            padding: 5px 10px;
+            border: 1px solid black;
+            background: white;
+            cursor: pointer;
+            font-size: 9px;
+            font-family: monospace;
+            transition: all 0.1s;
+            text-decoration: none;
+            color: black;
+            display: inline-block;
+        }
+
+        .download-btn:hover {
+            background: black;
+            color: white;
+        }
+
+        .download-btn:active {
+            transform: translateY(1px);
+        }
+
+        .upload-area {
+            margin-top: 5px;
+            border: 1px dashed black;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+
+        .upload-area:hover {
+            background: #f0f0f0;
+        }
+
+        .upload-area.dragover {
+            background: black;
+            color: white;
+        }
+
+        .upload-input {
+            display: none;
+        }
+
+        .upload-label {
+            font-size: 9px;
+            cursor: pointer;
+            display: block;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 0;
+            margin-top: 5px;
+        }
+
+        .view-btn {
+            flex: 1;
+            padding: 4px;
+            border: 1px solid black;
+            background: white;
+            cursor: pointer;
+            font-size: 9px;
+            font-family: monospace;
+            transition: all 0.1s;
+            border-right: none;
+        }
+
+        .view-btn:last-child {
+            border-right: 1px solid black;
+        }
+
+        .view-btn.active {
+            background: black;
+            color: white;
+        }
+
+        .view-btn:hover {
+            background: black;
+            color: white;
+        }
+
+        .test-area {
+            background: white;
+            border: 1px solid black;
+            padding: 40px;
+            flex: 1;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .custom-text {
+            display: none;
+            flex: 1;
+        }
+
+        .custom-text.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #customText {
+            font-family: 'LaPomme', sans-serif;
+            width: 100%;
+            border: none;
+            outline: none;
+            resize: none;
+            flex: 1;
+            line-height: 1.5;
+            color: black;
+            background: transparent;
+            padding: 20px;
+            overflow: visible;
+        }
+
+        .character-grid {
+            display: none;
+            font-family: 'LaPomme', sans-serif;
+        }
+
+        .character-grid.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 0;
+            padding: 20px;
+        }
+
+        .char-box {
+            aspect-ratio: 1;
+            border: 1px solid black;
+            border-right: none;
+            border-bottom: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            transition: background 0.1s;
+            cursor: pointer;
+            overflow: visible;
+        }
+
+        .char-box:hover {
+            background: black;
+            color: white;
+        }
+
+        .sample-text {
+            display: none;
+            font-family: 'LaPomme', sans-serif;
+            padding: 20px;
+        }
+
+        .sample-text.active {
+            display: block;
+        }
+
+        .sample-section {
+            margin-bottom: 30px;
+        }
+
+        .sample-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .sample-section h3 {
+            font-family: monospace;
+            font-size: 9px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            border-bottom: 1px solid black;
+            padding-bottom: 3px;
+        }
+
+        .sample-section p {
+            margin-bottom: 10px;
+            word-wrap: break-word;
+            overflow: visible;
+        }
+
+        @media (max-width: 768px) {
+            .control-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .char-box {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>LA POMME FONT TESTER</h1>
+        </div>
+
+        <div class="controls-panel">
+            <div class="control-group">
+                <label>MASTER</label>
+                <select id="masterSelect" style="width: 100%; padding: 4px; border: 1px solid black; background: white; font-family: monospace; font-size: 9px;">
+                    <option value="">Loading masters...</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label>UPLOAD & TEST FONT</label>
+                <div class="upload-area" id="uploadArea">
+                    <input type="file" id="fontUpload" class="upload-input" accept=".ttf,.otf,.woff,.woff2" multiple>
+                    <label for="fontUpload" class="upload-label">
+                        CLICK OR DRAG & DROP FONT FILES HERE<br>
+                        <span style="font-size: 8px; color: #666;">(TTF, OTF, WOFF, WOFF2)</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>VIEW</label>
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="custom">CUSTOM</button>
+                    <button class="view-btn" data-view="samples">SAMPLES</button>
+                    <button class="view-btn" data-view="grid">GRID</button>
+                </div>
+            </div>
+
+            <div class="control-row">
+                <div class="control-group">
+                    <label>
+                        SIZE
+                        <span class="slider-value" id="sizeValue">48px</span>
+                    </label>
+                    <input type="range" id="fontSize" min="12" max="144" value="48" step="1">
+                </div>
+
+                <div class="control-group">
+                    <label>
+                        SPACING
+                        <span class="slider-value" id="spacingValue">0em</span>
+                    </label>
+                    <input type="range" id="letterSpacing" min="-0.1" max="0.5" value="0" step="0.01">
+                </div>
+
+                <div class="control-group">
+                    <label>
+                        LINE
+                        <span class="slider-value" id="lineHeightValue">1.5</span>
+                    </label>
+                    <input type="range" id="lineHeight" min="0.8" max="2.5" value="1.5" step="0.1">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>PRESET</label>
+                <div class="preset-buttons">
+                    <button class="preset-btn" data-text="The quick brown fox jumps over the lazy dog">PANGRAM</button>
+                    <button class="preset-btn" data-text="ABCDEFGHIJKLMNOPQRSTUVWXYZ">ABC</button>
+                    <button class="preset-btn" data-text="abcdefghijklmnopqrstuvwxyz">abc</button>
+                    <button class="preset-btn" data-text="0123456789">123</button>
+                    <button class="preset-btn" data-text="!@#$%^&*()_+-=[]{}|;:',.<>?/~`">!@#</button>
+                    <button class="preset-btn" data-text="Hamburgefonstiv">BURGER</button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>DOWNLOAD FONTS</label>
+                <div id="downloadButtons" class="download-buttons">
+                    <span style="font-size: 9px; color: #666;">Loading available fonts...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-area">
+            <!-- Custom Text View -->
+            <div id="customView" class="custom-text active">
+                <textarea id="customText" placeholder="Type your text here to test the font...">The quick brown fox jumps over the lazy dog
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz
+0123456789</textarea>
+            </div>
+
+            <!-- Sample Text View -->
+            <div id="samplesView" class="sample-text">
+                <div class="sample-section">
+                    <h3>PANGRAMS</h3>
+                    <p>The quick brown fox jumps over the lazy dog</p>
+                    <p>Pack my box with five dozen liquor jugs</p>
+                    <p>Sphinx of black quartz, judge my vow</p>
+                    <p>How vexingly quick daft zebras jump!</p>
+                </div>
+
+                <div class="sample-section">
+                    <h3>ALPHABET</h3>
+                    <p>ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+                    <p>abcdefghijklmnopqrstuvwxyz</p>
+                </div>
+
+                <div class="sample-section">
+                    <h3>NUMBERS & SYMBOLS</h3>
+                    <p>0123456789</p>
+                    <p>!@#$%^&*()_+-=[]{}|;:',.<>?/~`</p>
+                </div>
+
+                <div class="sample-section">
+                    <h3>COMMON WORDS</h3>
+                    <p>Typography Design Font Geometric Modern Elegant</p>
+                    <p>Hamburgefonstiv • Handgloves • HVOPW avopw</p>
+                </div>
+
+                <div class="sample-section">
+                    <h3>PARAGRAPH</h3>
+                    <p>Typography is the art and technique of arranging type to make written language legible, readable and appealing when displayed. The arrangement of type involves selecting typefaces, point sizes, line lengths, line-spacing, and letter-spacing, and adjusting the space between pairs of letters.</p>
+                </div>
+            </div>
+
+            <!-- Character Grid View -->
+            <div id="gridView" class="character-grid">
+                <!-- JavaScript will populate this -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Font controls
+        const fontSize = document.getElementById('fontSize');
+        const letterSpacing = document.getElementById('letterSpacing');
+        const lineHeight = document.getElementById('lineHeight');
+        const customText = document.getElementById('customText');
+        const sizeValue = document.getElementById('sizeValue');
+        const spacingValue = document.getElementById('spacingValue');
+        const lineHeightValue = document.getElementById('lineHeightValue');
+        const masterSelect = document.getElementById('masterSelect');
+
+        // View controls
+        const viewButtons = document.querySelectorAll('.view-btn');
+        const customView = document.getElementById('customView');
+        const samplesView = document.getElementById('samplesView');
+        const gridView = document.getElementById('gridView');
+
+        // Preset buttons
+        const presetButtons = document.querySelectorAll('.preset-btn');
+
+        // Available masters - will be populated dynamically
+        let currentMaster = null;
+        let loadedFonts = {};
+        let uploadedFonts = [];
+
+        // View switching
+        viewButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                viewButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                // Show corresponding view
+                const view = button.dataset.view;
+                customView.classList.remove('active');
+                samplesView.classList.remove('active');
+                gridView.classList.remove('active');
+
+                if (view === 'custom') {
+                    customView.classList.add('active');
+                } else if (view === 'samples') {
+                    samplesView.classList.add('active');
+                } else if (view === 'grid') {
+                    gridView.classList.add('active');
+                }
+            });
+        });
+
+        // Preset text buttons
+        presetButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                customText.value = button.dataset.text;
+                // Switch to custom view
+                viewButtons[0].click();
+            });
+        });
+
+        // Generate character grid
+        function generateCharacterGrid() {
+            const chars = [];
+            
+            // Basic Latin uppercase
+            for (let i = 65; i <= 90; i++) {
+                chars.push(String.fromCharCode(i));
+            }
+            
+            // Basic Latin lowercase
+            for (let i = 97; i <= 122; i++) {
+                chars.push(String.fromCharCode(i));
+            }
+            
+            // Numbers
+            for (let i = 48; i <= 57; i++) {
+                chars.push(String.fromCharCode(i));
+            }
+            
+            // Common punctuation and symbols
+            const symbols = '!@#$%^&*()_+-=[]{}|;:\',.<>?/~`"\\';
+            chars.push(...symbols.split(''));
+            
+            // Extended Latin (common accented characters)
+            const extended = 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ';
+            chars.push(...extended.split(''));
+
+            gridView.innerHTML = chars.map(char => 
+                `<div class="char-box" title="${char}">${char}</div>`
+            ).join('');
+        }
+
+        // Load available masters from build directory
+        async function loadAvailableMasters() {
+            // Since fetch doesn't work with file:// protocol, try to load all known masters directly
+            const possibleMasters = [
+                { file: 'DarumaPomme-Regular.ttf', name: 'JARDIN (REGULAR)' },
+                { file: 'DarumaPomme-Italic.ttf', name: 'JARDIN (ITALIC)' },
+                { file: 'Leafeon-Medium.ttf', name: 'LEAFEON' },
+                { file: 'Pommiedemo2-Medium.ttf', name: 'POMMIE' }
+            ];
+
+            const availableMasters = [];
+            
+            // Try to load each font and see which ones succeed
+            for (const master of possibleMasters) {
+                try {
+                    const fontFace = new FontFace(
+                        `LaPomme-${master.file}`, 
+                        `url(build/instance_ttf/${master.file})`
+                    );
+                    await fontFace.load();
+                    document.fonts.add(fontFace);
+                    availableMasters.push(master);
+                    loadedFonts[master.file] = `LaPomme-${master.file}`;
+                    console.log(`✅ Loaded: ${master.name}`);
+                } catch (e) {
+                    console.log(`❌ Failed to load: ${master.name} (${e.message})`);
+                }
+            }
+
+            if (availableMasters.length === 0) {
+                masterSelect.innerHTML = '<option value="">No masters found - run ./build-private.sh</option>';
+                console.error('No fonts could be loaded. Make sure build/instance_ttf/ contains font files.');
+                return;
+            }
+
+            // Populate the dropdown
+            masterSelect.innerHTML = availableMasters.map(master => {
+                return `<option value="${master.file}">${master.name}</option>`;
+            }).join('');
+
+            // Set and apply the first master
+            if (availableMasters.length > 0) {
+                currentMaster = availableMasters[0].file;
+                masterSelect.value = currentMaster;
+                applyStyles();
+                console.log(`✅ Loaded ${availableMasters.length} masters successfully`);
+            }
+        }
+
+        // Master selection change
+        masterSelect.addEventListener('change', (e) => {
+            const selectedMaster = e.target.value;
+            if (selectedMaster && loadedFonts[selectedMaster]) {
+                currentMaster = selectedMaster;
+                applyStyles();
+                console.log(`Switched to: ${selectedMaster}`);
+            }
+        });
+
+        // Apply font styles (updated to use current master)
+        function applyStyles() {
+            const size = fontSize.value + 'px';
+            const spacing = letterSpacing.value + 'em';
+            const lh = lineHeight.value;
+
+            if (currentMaster && loadedFonts[currentMaster]) {
+                const fontName = loadedFonts[currentMaster];
+                customText.style.fontFamily = `'${fontName}', monospace`;
+                samplesView.style.fontFamily = `'${fontName}', monospace`;
+                gridView.style.fontFamily = `'${fontName}', monospace`;
+            }
+
+            customText.style.fontSize = size;
+            customText.style.letterSpacing = spacing;
+            customText.style.lineHeight = lh;
+
+            samplesView.style.fontSize = size;
+            samplesView.style.letterSpacing = spacing;
+            samplesView.style.lineHeight = lh;
+
+            gridView.style.fontSize = size;
+            gridView.style.letterSpacing = spacing;
+
+            sizeValue.textContent = size;
+            spacingValue.textContent = spacing;
+            lineHeightValue.textContent = lh;
+        }
+
+        // Event listeners for sliders
+        fontSize.addEventListener('input', applyStyles);
+        letterSpacing.addEventListener('input', applyStyles);
+        lineHeight.addEventListener('input', applyStyles);
+
+        // Font upload functionality
+        const uploadArea = document.getElementById('uploadArea');
+        const fontUpload = document.getElementById('fontUpload');
+
+        // Handle file selection via input
+        fontUpload.addEventListener('change', function(e) {
+            handleFontFiles(e.target.files);
+        });
+
+        // Drag and drop handlers
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadArea.classList.remove('dragover');
+            handleFontFiles(e.dataTransfer.files);
+        });
+
+        // Handle uploaded font files
+        async function handleFontFiles(files) {
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const fileName = file.name;
+                const fileExt = fileName.split('.').pop().toLowerCase();
+
+                // Check if it's a valid font file
+                if (!['ttf', 'otf', 'woff', 'woff2'].includes(fileExt)) {
+                    console.log(`⏭️ Skipped: ${fileName} - not a valid font file`);
+                    continue;
+                }
+
+                try {
+                    // Read the file as a data URL
+                    const reader = new FileReader();
+                    
+                    reader.onload = async function(e) {
+                        const fontData = e.target.result;
+                        const fontName = `Uploaded-${fileName.replace(/\.[^/.]+$/, '')}`;
+                        
+                        try {
+                            // Create and load the font
+                            const fontFace = new FontFace(fontName, `url(${fontData})`);
+                            await fontFace.load();
+                            document.fonts.add(fontFace);
+                            
+                            // Add to uploaded fonts list
+                            const fontKey = `uploaded_${uploadedFonts.length}`;
+                            uploadedFonts.push({
+                                key: fontKey,
+                                name: fontName,
+                                displayName: fileName
+                            });
+                            loadedFonts[fontKey] = fontName;
+                            
+                            // Add to master selector
+                            const option = document.createElement('option');
+                            option.value = fontKey;
+                            option.textContent = `📤 ${fileName}`;
+                            masterSelect.appendChild(option);
+                            
+                            // Automatically switch to the uploaded font
+                            currentMaster = fontKey;
+                            masterSelect.value = fontKey;
+                            applyStyles();
+                            
+                            console.log(`✅ Loaded uploaded font: ${fileName}`);
+                        } catch (error) {
+                            console.error(`❌ Error loading font ${fileName}:`, error);
+                            alert(`Failed to load font: ${fileName}\n${error.message}`);
+                        }
+                    };
+                    
+                    reader.readAsDataURL(file);
+                } catch (error) {
+                    console.error(`❌ Error reading file ${fileName}:`, error);
+                }
+            }
+        }
+
+        // Load and generate download buttons for available fonts
+        async function loadDownloadButtons() {
+            const downloadContainer = document.getElementById('downloadButtons');
+            
+            // List of all potential font files
+            const potentialFonts = [
+                // TTF files from build
+                { path: 'build/instance_ttf/DarumaPomme-Regular.ttf', name: 'Jardin Regular', format: 'TTF' },
+                { path: 'build/instance_ttf/DarumaPomme-Italic.ttf', name: 'Jardin Italic', format: 'TTF' },
+                { path: 'build/instance_ttf/Leafeon-Medium.ttf', name: 'Leafeon Medium', format: 'TTF' },
+                { path: 'build/instance_ttf/Pommiedemo2-Medium.ttf', name: 'Pommie', format: 'TTF' },
+                // OTF files from src (common naming patterns)
+                { path: 'src/DarumaPomme-Regular.otf', name: 'Jardin Regular', format: 'OTF' },
+                { path: 'src/DarumaPomme-Italic.otf', name: 'Jardin Italic', format: 'OTF' },
+                { path: 'src/Leafeon-Regular.otf', name: 'Leafeon Regular', format: 'OTF' },
+                { path: 'src/Leafeon-Medium.otf', name: 'Leafeon Medium', format: 'OTF' },
+                { path: 'src/Pommiedemo2-Medium.otf', name: 'Pommie', format: 'OTF' },
+                { path: 'src/jardin.otf', name: 'Jardin', format: 'OTF' },
+                { path: 'src/leafeon.otf', name: 'Leafeon', format: 'OTF' },
+                { path: 'src/pommie.otf', name: 'Pommie', format: 'OTF' }
+            ];
+
+            const availableFonts = [];
+            
+            // Check which fonts actually exist by trying to load them
+            for (const font of potentialFonts) {
+                try {
+                    // Try to load the font file - if it fails, the file doesn't exist
+                    const testFont = new FontFace(`Test-${font.name}`, `url(${font.path})`);
+                    await testFont.load();
+                    availableFonts.push(font);
+                    console.log(`✅ Found: ${font.name} (${font.format})`);
+                } catch (e) {
+                    // Font file doesn't exist or failed to load
+                    console.log(`⏭️ Skipped: ${font.name} (${font.format}) - not found`);
+                }
+            }
+
+            // Generate download buttons only for available fonts
+            if (availableFonts.length === 0) {
+                downloadContainer.innerHTML = '<span style="font-size: 9px; color: #666;">No fonts available for download</span>';
+            } else {
+                downloadContainer.innerHTML = '';
+                availableFonts.forEach(font => {
+                    const button = document.createElement('a');
+                    button.href = font.path;
+                    button.download = font.path.split('/').pop();
+                    button.className = 'download-btn';
+                    button.textContent = `↓ ${font.name} (${font.format})`;
+                    downloadContainer.appendChild(button);
+                });
+                console.log(`✅ Generated ${availableFonts.length} download buttons`);
+            }
+        }
+
+        // Initialize
+        applyStyles();
+        generateCharacterGrid();
+        loadAvailableMasters();
+        loadDownloadButtons();
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,174 @@
+{
+  "fonts" : {
+    "default" : 0,
+    "fontProjects" : [
+      {
+        "familyName" : "Sleek1009",
+        "filePath" : "~/sleek-font/src/sleek0910.glyphs",
+        "id" : "FEE11D75-A9B5-4479-BB35-1C2DB27FA4AE",
+        "type" : "GlyphsFormat3"
+      }
+    ],
+    "slantOrigin" : "halfXHeight",
+    "styles" : [
+      {
+        "active" : true,
+        "fontProjectStyle" : {
+          "active" : true,
+          "id" : "m002",
+          "info" : {
+            "axisValues" : {
+              "ital" : 31,
+              "wght" : 100
+            },
+            "familyName" : "Sleek1009",
+            "fontSlant" : -27,
+            "styleName" : "script",
+            "upm" : 1000,
+            "version" : "1.000",
+            "verticalMetrics" : {
+              "ascender" : 800,
+              "capHeight" : 700,
+              "descender" : -290,
+              "xHeight" : 500
+            }
+          },
+          "project" : "~/sleek-font/src/sleek0910.glyphs",
+          "styleName" : "script",
+          "type" : "source"
+        }
+      }
+    ]
+  },
+  "info" : {
+    "lastExportedFiles" : [
+      "~/Downloads/Mikey-Diacriticsws Sleek1009 script 2025-10-10.pdf"
+    ],
+    "version" : 5
+  },
+  "sections" : [
+    {
+      "active" : true,
+      "content" : "Mikey\nSleek Type Family\nDiacritics Workshop",
+      "design" : {
+        "fontSize" : 90,
+        "lineHeight" : 1.2,
+        "textAlign" : "center"
+      },
+      "layout" : "simple",
+      "name" : "Cover"
+    },
+    {
+      "active" : true,
+      "content" : "AÁĂẮẶẰẲẴÂẤẬẦẨẪÄẠÀẢĄÅÃÆBCĆČÇDĎĐEÉĚÊẾỆỀỂỄËẸÈẺĘẼFGĢHĦIÍÎÏỊÌỈĪĮĨJKĶLĹĽĻŁMNŃŇŅÑOÓÔỐỘỒỔỖÖỌÒỎƠỚỢỜỞỠŐØÕŒPÞQRŔŘSŚŠŞẞTŦŤŢȚUÚÛÜỤÙỦƯỨỰỪỬỮŰŲŮŨVWXYÝŸỴỲỶỸZŹŽŻaáăắặằẳẵâấậầẩẫäạàảąåãæbcćčçdďđeéěêếệềểễëẹèẻęẽfgģhħiıíîïịìỉīįĩjȷkķlĺľļłmnńňņñoóôốộồổỗöọòỏơớợờởỡőøõœpþqrŕřsśšşßtŧťţțuúûüụùủưứựừửữűųůũvwxyýÿỵỳỷỹzźžż",
+      "design" : {
+        "glyphInfoLabels" : {
+          "glyphName" : true
+        },
+        "gridFontSize" : 30,
+        "gridGutters" : [
+          7.0866141732282495,
+          5.6692913385826
+        ]
+      },
+      "layout" : "glyphGrid",
+      "name" : "Glyphs Grid"
+    },
+    {
+      "active" : true,
+      "content" : "Tīri çağ, Fu-ťien or viñeta Ærø krikľúň fésű? Įjungti trionfò příď! Işçi literatūrinė »gefäß« fået vadībā reîntâlni. ÞÝÐA GROẞBUCH GRÜN BRØD MOĦĦ?! IJmuiden krągły ĉeĥe bæði ģīmis “īkšķi Třešť” veľko stýfður fīča „SDĽ“ lijst.",
+      "design" : {
+        "fontSize" : 56,
+        "lineHeight" : 1.2,
+        "textAlign" : "left"
+      },
+      "layout" : "simple",
+      "name" : "Crash Text"
+    },
+    {
+      "active" : true,
+      "content" : "Înjurând pițigăiat, zoofobul comandă vexat whisky și tequila. Luís argüia à Júlia que «brações, fé, chá, óxido, pôr, zângão» eram palavras do português. Dość gróźb fuzją, klnę, pych i małżeństw! Pójdź w loch zbić małżeńską gęś futryn! Vår sære Zulu fra badeøya spilte jo whist og quickstep i min taxi. Įlinkdama fechtuotojo špaga sublykčiojusi pragręžė apvalų arbūzą. Muļķa hipiji mēģina brīvi nogaršot celofāna žņaudzējčūsku. Kæmi ný öxi hér, ykist þjófum nú bæði víl og ádrepa. Jó foxim és don Quijote húszwattos lámpánál ülve egy pár bűvös cipőt készít. Victor jagt zwölf Boxkämpfer quer über den großen Sylter Deich. Voix ambiguë d'un cœur qui au zéphyr préfère les jattes de kiwi. Bâchez la queue du wagon-taxi avec les pyjamas du fakir. Hyvän lorun sangen pieneksi hyödyksi jäi suomen kirjaimet. See väike mölder jõuab rongile hüpata. Eble ĉiu kvazaŭ-deca fuŝĥoraĵo ĝojigos homtipon. Høj bly gom vandt fræk sexquiz på wc. Příliš žluťoučký kůň úpěl ďábelské ódy. Hleď, toť přízračný kůň v mátožné póze šíleně úpí. Kŕdeľ ďatľov učí koňa žrať kôru. Hišničin bratec vzgaja polže pod fikusom. Això, il·lús company geniüt, ja és un lluït rètol blavís d'onze kWh. Gojazni đačić s biciklom drži hmelj i finu vatu u džepu nošnje. El veloz murciélago hindú comía feliz cardillo y kiwi. La cigüeña tocaba el saxofón detrás del palenque de paja. Zəfər, jaketini də papağını da götür, bu axşam hava çox soyuq olacaq. Byxfjärmat föl gick på duvshowen. Öküz ajan hapse düştü yavrum, ocağı felç gibi.",
+      "design" : {
+        "fontSize" : 22,
+        "lineHeight" : 1.2,
+        "textAlign" : "left"
+      },
+      "layout" : "simple",
+      "name" : "5 Latin based languages short"
+    },
+    {
+      "active" : true,
+      "content" : "Přemýšlel jsem včera večer dlouho o François' revolučním návrhu na rozšíření našeho projektu. Café Żółty Słoń, který nedávno otevřeli na hlavní třídě, nabízí nejen výběrovou kávu z vietnamské plantáže Mễ Xinh, ale také úžasné dezerty připravované každé ráno čerstvě. Čeština, ačkoliv může být považována za složitý jazyk s množstvím gramatických pravidel, má své jedinečné kouzlo a melodičnost—říká můj přítel Søren z Osla, který se ji učí již tři roky. Naša straža još uvijek čeka na döner kebab iz Istanbula, který měl dorazit dnes odpoledne.\n\n\n\n\n\n\n\nNhững chiếc lá vàng đã rơi xuống đất ướt át sau cơn mưa chiều qua, tạo nên một khung cảnh thật đẹp và lãng mạn. Phở đặc biệt tại quán Hương Việt Nam được phục vụ với giá cực kỳ phải chăng—chỉ có 85.000₫ mỗi bát lớn, kèm theo rau thơm và nước mắm ngon tuyệt. Tôi thường gặp gỡ bạn của mình, một người Pháp tên là Grégoire, để cùng nhau thưởng thức món ăn này và nói chuyện về công việc thiết kế typeface của Ðức's studio, nơi họ đã tạo ra nhiều font chữ đẹp mắt cho các thương hiệu lớn.\n\nÆsop's fábulas são måltíð espéciál. Ñoño från Cøpenhagen träffade Włodzimierz på gården—båda älskar œnologie och discussão sobre vår världshistoria. Děkuji za příležitost studovat při Universitě Karlově v Praze, kde jsem získal znalosti o typografii.",
+      "design" : {
+        "columnQuantity" : 0,
+        "continuousContent" : true,
+        "fontSizes" : [
+          16,
+          20,
+          26
+        ],
+        "lineHeight" : 1.2,
+        "textAlign" : "left"
+      },
+      "layout" : "columns",
+      "name" : "3 columns"
+    },
+    {
+      "active" : true,
+      "content" : "Łódź słynie z pięknej architektury, którą można podziwiać wędrując głównymi ulicami. Śmiało można powiedzieć, że Wałęsa był wielkim przywódcą—mówi profesor Dvořák, znany czeski naukowiec. Naši přátelé z Bratislavy milují tradiční českou kuchyni, zvláště guláš s knedlíky.\nØyvind fortæller om færøsk tradition på Þingvellir í Ísland. Çiçeklerin açtığı bahar mevsiminde İstanbul’da gezinmek harikaydı—özellikle Gülhane Parkı’nda. Ångström’s teori fra København är berömd världen över.",
+      "design" : {
+        "columnQuantity" : 0,
+        "continuousContent" : true,
+        "fontSizes" : [
+          32,
+          38
+        ],
+        "lineHeight" : 1.2,
+        "textAlign" : "left"
+      },
+      "layout" : "columns",
+      "name" : "2 columns"
+    }
+  ],
+  "settings" : {
+    "exportedFiles" : {
+      "addDate" : true,
+      "addFamilyName" : true,
+      "addStyleName" : true,
+      "addTime" : false,
+      "exportFolder" : "~/Downloads",
+      "fileName" : "Mikey-Diacriticsws",
+      "multiplePDFs" : false
+    },
+    "header" : {
+      "dateFormat" : {
+        "day" : true,
+        "month" : true,
+        "time" : true,
+        "weekday" : true,
+        "year" : true
+      },
+      "localizeDate" : true,
+      "showDesigner" : true,
+      "showFamilyName" : true,
+      "showFileName" : false,
+      "showSectionName" : true,
+      "showStyleName" : true,
+      "showVersion" : false
+    },
+    "labels" : {
+      "currentFont" : false,
+      "font" : "CeraMono-Regular\nCera Mono Regular",
+      "fontSize" : 10
+    },
+    "pageSize" : {
+      "height" : 595.2755905511758,
+      "width" : 841.889763779519
+    },
+    "removeEmptyGlyphs" : true,
+    "units" : {
+      "layout" : "mm",
+      "typography" : "pt"
+    }
+  }
+}
