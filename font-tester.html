@@ -213,6 +213,42 @@
             color: white;
         }
 
+        .collapsible-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+            padding: 3px 0;
+            transition: all 0.2s;
+        }
+
+        .collapsible-header:hover {
+            opacity: 0.7;
+        }
+
+        .collapse-toggle {
+            font-size: 10px;
+            transition: transform 0.2s;
+            font-family: monospace;
+        }
+
+        .collapse-toggle.collapsed {
+            transform: rotate(-90deg);
+        }
+
+        .collapsible-content {
+            max-height: 1000px;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            opacity: 1;
+        }
+
+        .collapsible-content.collapsed {
+            max-height: 0;
+            opacity: 0;
+        }
+
         .upload-area {
             margin-top: 5px;
             border: 1px dashed black;
@@ -533,16 +569,26 @@
             </div>
 
             <div class="control-group">
-                <label>DOWNLOAD FONTS</label>
-                <div id="downloadButtons" class="download-buttons">
-                    <span style="font-size: 9px; color: #666;">Loading available fonts...</span>
+                <div class="collapsible-header" onclick="toggleCollapse('downloadSection')">
+                    <label style="margin: 0; cursor: pointer;">DOWNLOAD FONTS</label>
+                    <span class="collapse-toggle" id="downloadSection-toggle">▼</span>
+                </div>
+                <div id="downloadSection" class="collapsible-content collapsed">
+                    <div id="downloadButtons" class="download-buttons">
+                        <span style="font-size: 9px; color: #666;">Loading available fonts...</span>
+                    </div>
                 </div>
             </div>
 
             <div class="control-group" id="versionSelectorGroup" style="display: none;">
-                <label>VERSION SELECTOR</label>
-                <div id="versionSelectors" style="display: grid; grid-template-columns: 1fr; gap: 10px;">
-                    <!-- Version selectors will be populated here -->
+                <div class="collapsible-header" onclick="toggleCollapse('versionSection')">
+                    <label style="margin: 0; cursor: pointer;">VERSION SELECTOR</label>
+                    <span class="collapse-toggle" id="versionSection-toggle">▼</span>
+                </div>
+                <div id="versionSection" class="collapsible-content collapsed">
+                    <div id="versionSelectors" style="display: grid; grid-template-columns: 1fr; gap: 10px;">
+                        <!-- Version selectors will be populated here -->
+                    </div>
                 </div>
             </div>
 
@@ -1293,6 +1339,17 @@ abcdefghijklmnopqrstuvwxyz
             });
             console.log(`Cleared all stylistic sets (${allSpans.length} removed)`);
         });
+
+        // Toggle collapse for sections
+        function toggleCollapse(sectionId) {
+            const content = document.getElementById(sectionId);
+            const toggle = document.getElementById(sectionId + '-toggle');
+            
+            if (content && toggle) {
+                content.classList.toggle('collapsed');
+                toggle.classList.toggle('collapsed');
+            }
+        }
 
         // Initialize
         applyStyles();
