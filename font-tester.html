@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La Pomme Font Tester</title>
     <style>
+        /* UI Font */
+        @font-face {
+            font-family: 'NaNRageSans';
+            src: url('NaNRageSans-VF.woff2') format('woff2');
+            font-weight: 100 900;
+            font-display: swap;
+        }
+
         /* Font faces - preload for better iOS compatibility */
         @font-face {
             font-family: 'LaPomme-DarumaPomme-Regular';
@@ -37,7 +45,7 @@
         }
 
         body {
-            font-family: monospace;
+            font-family: 'NaNRageSans', -apple-system, BlinkMacSystemFont, sans-serif;
             background: white;
             min-height: 100vh;
             padding: 10px;
@@ -73,7 +81,7 @@
             background: white;
             cursor: pointer;
             font-size: 9px;
-            font-family: monospace;
+            font-family: 'NaNRageSans', sans-serif;
             transition: all 0.1s;
         }
 
@@ -188,7 +196,7 @@
             background: white;
             cursor: pointer;
             font-size: 9px;
-            font-family: monospace;
+            font-family: 'NaNRageSans', sans-serif;
             transition: all 0.1s;
         }
 
@@ -210,7 +218,7 @@
             background: white;
             cursor: pointer;
             font-size: 9px;
-            font-family: monospace;
+            font-family: 'NaNRageSans', sans-serif;
             transition: all 0.1s;
             text-decoration: none;
             color: black;
@@ -244,7 +252,7 @@
             padding: 4px;
             border: 1px solid black;
             background: white;
-            font-family: monospace;
+            font-family: 'NaNRageSans', sans-serif;
             font-size: 9px;
             margin-bottom: 5px;
         }
@@ -256,7 +264,7 @@
             background: white;
             cursor: pointer;
             font-size: 9px;
-            font-family: monospace;
+            font-family: 'NaNRageSans', sans-serif;
             transition: all 0.1s;
         }
 
@@ -282,7 +290,7 @@
         .collapse-toggle {
             font-size: 10px;
             transition: transform 0.2s;
-            font-family: monospace;
+            font-family: 'NaNRageSans', sans-serif;
         }
 
         .collapse-toggle.collapsed {
@@ -380,7 +388,7 @@
             background: white;
             cursor: pointer;
             font-size: 8px;
-            font-family: monospace;
+            font-family: 'NaNRageSans', sans-serif;
             transition: all 0.1s;
         }
 
@@ -407,7 +415,7 @@
             background: white;
             cursor: pointer;
             font-size: 9px;
-            font-family: monospace;
+            font-family: 'NaNRageSans', sans-serif;
             transition: all 0.1s;
             border-right: none;
         }
@@ -523,7 +531,7 @@
         }
 
         .sample-section h3 {
-            font-family: monospace;
+            font-family: 'NaNRageSans', sans-serif;
             font-size: 9px;
             margin-bottom: 10px;
             letter-spacing: 1px;
@@ -578,17 +586,17 @@
             <div class="left-panel" id="leftPanel">
                 <div class="control-group">
                     <label>MASTER</label>
-                    <select id="masterSelect" style="width: 100%; padding: 4px; border: 1px solid black; background: white; font-family: monospace; font-size: 9px;">
+                    <select id="masterSelect" style="width: 100%; padding: 4px; border: 1px solid black; background: white; font-family: 'NaNRageSans', sans-serif; font-size: 9px;">
                         <option value="">Loading masters...</option>
                     </select>
                 </div>
 
                 <div class="control-group" id="versionTestGroup" style="display: none;">
                     <label>TEST VERSION</label>
-                    <select id="versionTestSelect" style="width: 100%; padding: 4px; border: 1px solid black; background: white; font-family: monospace; font-size: 9px; margin-bottom: 5px;">
+                    <select id="versionTestSelect" style="width: 100%; padding: 4px; border: 1px solid black; background: white; font-family: 'NaNRageSans', sans-serif; font-size: 9px; margin-bottom: 5px;">
                         <option value="">Latest (Current)</option>
                     </select>
-                    <button id="loadVersionBtn" style="width: 100%; padding: 5px; border: 1px solid black; background: white; cursor: pointer; font-size: 9px; font-family: monospace; transition: all 0.1s;" onmouseover="this.style.background='black'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='black'">
+                    <button id="loadVersionBtn" style="width: 100%; padding: 5px; border: 1px solid black; background: white; cursor: pointer; font-size: 9px; font-family: 'NaNRageSans', sans-serif; transition: all 0.1s;" onmouseover="this.style.background='black'; this.style.color='white'" onmouseout="this.style.background='white'; this.style.color='black'">
                         LOAD SELECTED VERSION
                     </button>
                 </div>
@@ -743,7 +751,7 @@
                     <div style="margin-top: 5px; font-size: 8px; color: #666;">
                         <strong>Apply:</strong> Select text, click SS button<br>
                         <strong>Remove:</strong> Select styled text (hover shows gray), click any SS button OR click the styled text<br>
-                        <button id="clearAllSS" style="margin-top: 5px; padding: 3px 8px; border: 1px solid black; background: white; cursor: pointer; font-size: 8px; font-family: monospace;">Clear All SS</button>
+                        <button id="clearAllSS" style="margin-top: 5px; padding: 3px 8px; border: 1px solid black; background: white; cursor: pointer; font-size: 8px; font-family: 'NaNRageSans', sans-serif;">Clear All SS</button>
                     </div>
                 </div>
             </div>
