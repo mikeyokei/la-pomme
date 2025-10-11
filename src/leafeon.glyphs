@@ -88,7 +88,7 @@ TEHLYDIV TEHXVDIV ",
 HO,
 "HOE homa
 nnooHHOO",
-"̛ơn"
+"tŕ̀ời"
 );
 customParameters = (
 {
@@ -7363,7 +7363,7 @@ unicode = 768;
 },
 {
 glyphname = acutecomb;
-lastChange = "2025-10-11 15:33:13 +0000";
+lastChange = "2025-10-11 19:56:30 +0000";
 layers = (
 {
 anchors = (
@@ -7395,11 +7395,11 @@ shapes = (
 {
 closed = 1;
 nodes = (
-(268,572,o),
-(165,662,c),
-(25,537,l),
-(33,524,ls),
-(59,481,o)
+(259,571,o),
+(156,673,c),
+(16,548,l),
+(27,533,ls),
+(58,491,o)
 );
 }
 );
