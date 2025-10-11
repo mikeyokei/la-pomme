@@ -851,7 +851,6 @@ abcdefghijklmnopqrstuvwxyz
 
         // Load available masters from build directory
         async function loadAvailableMasters() {
-            // Since fetch doesn't work with file:// protocol, try to load all known masters directly
             const possibleMasters = [
                 { file: 'DarumaPomme-Regular.ttf', name: 'JARDIN (REGULAR)' },
                 { file: 'DarumaPomme-Italic.ttf', name: 'JARDIN (ITALIC)' },
@@ -861,26 +860,60 @@ abcdefghijklmnopqrstuvwxyz
 
             const availableMasters = [];
             
-            // Try to load each font and see which ones succeed
+            console.log('🔍 Loading fonts from:', window.location.origin);
+            
+            // Try to load each font
             for (const master of possibleMasters) {
                 try {
+                    // Try relative path first (for local and Netlify)
+                    const relativePath = `build/instance_ttf/${master.file}`;
+                    console.log(`Trying: ${relativePath}`);
+                    
                     const fontFace = new FontFace(
                         `LaPomme-${master.file}`, 
-                        `url(build/instance_ttf/${master.file})`
+                        `url(${relativePath})`,
+                        { display: 'swap' }
                     );
+                    
                     await fontFace.load();
                     document.fonts.add(fontFace);
                     availableMasters.push(master);
                     loadedFonts[master.file] = `LaPomme-${master.file}`;
                     console.log(`✅ Loaded: ${master.name}`);
                 } catch (e) {
-                    console.log(`❌ Failed to load: ${master.name} (${e.message})`);
+                    console.warn(`Failed with relative path: ${e.message}`);
+                    
+                    // Try with absolute path as fallback
+                    try {
+                        const absolutePath = `${window.location.origin}/build/instance_ttf/${master.file}`;
+                        console.log(`Retrying with: ${absolutePath}`);
+                        
+                        const fontFace = new FontFace(
+                            `LaPomme-${master.file}`, 
+                            `url(${absolutePath})`,
+                            { display: 'swap' }
+                        );
+                        
+                        await fontFace.load();
+                        document.fonts.add(fontFace);
+                        availableMasters.push(master);
+                        loadedFonts[master.file] = `LaPomme-${master.file}`;
+                        console.log(`✅ Loaded with absolute path: ${master.name}`);
+                    } catch (e2) {
+                        console.error(`❌ Failed to load ${master.name}:`, e2);
+                    }
                 }
             }
 
             if (availableMasters.length === 0) {
-                masterSelect.innerHTML = '<option value="">No masters found - run ./build-private.sh</option>';
-                console.error('No fonts could be loaded. Make sure build/instance_ttf/ contains font files.');
+                masterSelect.innerHTML = '<option value="">⚠️ No fonts loaded - Check console</option>';
+                console.error('❌ FONT LOADING FAILED');
+                console.error('Current URL:', window.location.href);
+                console.error('Expected fonts at:', `${window.location.origin}/build/instance_ttf/`);
+                console.error('Please check:');
+                console.error('1. Font files are deployed');
+                console.error('2. Path is correct');
+                console.error('3. CORS headers are set');
                 return;
             }
 
@@ -894,7 +927,7 @@ abcdefghijklmnopqrstuvwxyz
                 currentMaster = availableMasters[0].file;
                 masterSelect.value = currentMaster;
                 applyStyles();
-                console.log(`✅ Loaded ${availableMasters.length} masters successfully`);
+                console.log(`✅ Loaded ${availableMasters.length} fonts successfully!`);
             }
         }
 
