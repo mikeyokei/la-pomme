@@ -25,6 +25,8 @@ open font-tester.html
 - **Upload & test fonts** - drag & drop or click to upload any font file (TTF, OTF, WOFF, WOFF2)
 - Size, spacing, and line height controls
 - Custom text, samples, and character grid views
+- **OpenType Features** - toggle ligatures, contextual alternates, swashes, small caps, and more
+- **Stylistic Sets** - select text and apply stylistic sets (ss01-ss20) to specific characters
 - **Download fonts** - automatically detects available TTF and OTF files
 - Brutalist minimal design
 
@@ -67,6 +69,32 @@ You can upload and test any font file directly in the browser without needing to
 6. Upload multiple fonts at once!
 
 Uploaded fonts appear in the MASTER dropdown with a 📤 icon.
+
+## OpenType Features
+
+The font tester includes comprehensive OpenType feature controls:
+
+### Global Features (Apply to all text)
+Toggle these features on/off to see their effect across all text:
+- **Ligatures (liga)** - Common ligatures (fi, fl, etc.)
+- **Contextual Alternates (calt)** - Context-aware character substitutions
+- **Discretionary Ligatures (dlig)** - Optional decorative ligatures
+- **Swash (swsh)** - Decorative flourishes
+- **Small Caps (smcp)** - Small capital letters
+- **Old Style Figures (onum)** - Old-style numbers
+
+### Stylistic Sets (Apply to selected text only)
+1. **Select text** in the custom text editor
+2. **Click a stylistic set button** (SS01-SS20)
+3. The stylistic set will be applied **only to your selection**
+4. Different parts of your text can have different stylistic sets!
+
+**Example workflow:**
+- Type "Hello World"
+- Select "Hello"
+- Click "SS01" to apply the first stylistic set to only "Hello"
+- Select "World" 
+- Click "SS02" to apply a different set to "World"
 
 ## Font Distribution
 

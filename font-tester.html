@@ -179,6 +179,71 @@
             display: block;
         }
 
+        .opentype-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .ot-feature {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            font-size: 8px;
+        }
+
+        .ot-feature input[type="checkbox"] {
+            width: 12px;
+            height: 12px;
+            cursor: pointer;
+        }
+
+        .ot-feature label {
+            cursor: pointer;
+            margin: 0;
+            font-size: 8px;
+        }
+
+        .selection-controls {
+            margin-top: 5px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            background: #f9f9f9;
+            display: none;
+        }
+
+        .selection-controls.active {
+            display: block;
+        }
+
+        .ss-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(45px, 1fr));
+            gap: 3px;
+            margin-top: 5px;
+        }
+
+        .ss-btn {
+            padding: 3px 5px;
+            border: 1px solid black;
+            background: white;
+            cursor: pointer;
+            font-size: 8px;
+            font-family: monospace;
+            transition: all 0.1s;
+        }
+
+        .ss-btn:hover {
+            background: black;
+            color: white;
+        }
+
+        .ss-btn.active {
+            background: black;
+            color: white;
+        }
+
         .view-toggle {
             display: flex;
             gap: 0;
@@ -242,7 +307,13 @@
             color: black;
             background: transparent;
             padding: 20px;
-            overflow: visible;
+            overflow: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .ss-span {
+            display: inline;
         }
 
         .character-grid {
@@ -398,15 +469,74 @@
                     <span style="font-size: 9px; color: #666;">Loading available fonts...</span>
                 </div>
             </div>
+
+            <div class="control-group">
+                <label>OPENTYPE FEATURES</label>
+                <div class="opentype-grid">
+                    <div class="ot-feature">
+                        <input type="checkbox" id="liga" checked>
+                        <label for="liga">Ligatures</label>
+                    </div>
+                    <div class="ot-feature">
+                        <input type="checkbox" id="calt" checked>
+                        <label for="calt">Contextual</label>
+                    </div>
+                    <div class="ot-feature">
+                        <input type="checkbox" id="dlig">
+                        <label for="dlig">Discret. Lig</label>
+                    </div>
+                    <div class="ot-feature">
+                        <input type="checkbox" id="swsh">
+                        <label for="swsh">Swash</label>
+                    </div>
+                    <div class="ot-feature">
+                        <input type="checkbox" id="smcp">
+                        <label for="smcp">Small Caps</label>
+                    </div>
+                    <div class="ot-feature">
+                        <input type="checkbox" id="onum">
+                        <label for="onum">Old Style</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>STYLISTIC SETS (SELECT TEXT FIRST)</label>
+                <div class="ss-buttons" id="ssButtons">
+                    <button class="ss-btn" data-ss="ss01">SS01</button>
+                    <button class="ss-btn" data-ss="ss02">SS02</button>
+                    <button class="ss-btn" data-ss="ss03">SS03</button>
+                    <button class="ss-btn" data-ss="ss04">SS04</button>
+                    <button class="ss-btn" data-ss="ss05">SS05</button>
+                    <button class="ss-btn" data-ss="ss06">SS06</button>
+                    <button class="ss-btn" data-ss="ss07">SS07</button>
+                    <button class="ss-btn" data-ss="ss08">SS08</button>
+                    <button class="ss-btn" data-ss="ss09">SS09</button>
+                    <button class="ss-btn" data-ss="ss10">SS10</button>
+                    <button class="ss-btn" data-ss="ss11">SS11</button>
+                    <button class="ss-btn" data-ss="ss12">SS12</button>
+                    <button class="ss-btn" data-ss="ss13">SS13</button>
+                    <button class="ss-btn" data-ss="ss14">SS14</button>
+                    <button class="ss-btn" data-ss="ss15">SS15</button>
+                    <button class="ss-btn" data-ss="ss16">SS16</button>
+                    <button class="ss-btn" data-ss="ss17">SS17</button>
+                    <button class="ss-btn" data-ss="ss18">SS18</button>
+                    <button class="ss-btn" data-ss="ss19">SS19</button>
+                    <button class="ss-btn" data-ss="ss20">SS20</button>
+                </div>
+                <div style="margin-top: 5px; font-size: 8px; color: #666;">
+                    Select text in the editor, then click a stylistic set to apply it to selection only
+                </div>
+            </div>
         </div>
 
         <div class="test-area">
             <!-- Custom Text View -->
             <div id="customView" class="custom-text active">
-                <textarea id="customText" placeholder="Type your text here to test the font...">The quick brown fox jumps over the lazy dog
+                <div id="customText" contenteditable="true" spellcheck="false">The quick brown fox jumps over the lazy dog
 ABCDEFGHIJKLMNOPQRSTUVWXYZ
 abcdefghijklmnopqrstuvwxyz
-0123456789</textarea>
+0123456789</div>
             </div>
 
             <!-- Sample Text View -->
@@ -501,11 +631,90 @@ abcdefghijklmnopqrstuvwxyz
         // Preset text buttons
         presetButtons.forEach(button => {
             button.addEventListener('click', () => {
-                customText.value = button.dataset.text;
+                customText.textContent = button.dataset.text;
                 // Switch to custom view
                 viewButtons[0].click();
             });
         });
+
+        // OpenType feature toggles
+        const otFeatures = ['liga', 'calt', 'dlig', 'swsh', 'smcp', 'onum'];
+        const activeFeatures = new Set(['liga', 'calt']); // Default active features
+
+        otFeatures.forEach(feature => {
+            const checkbox = document.getElementById(feature);
+            if (checkbox) {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        activeFeatures.add(feature);
+                    } else {
+                        activeFeatures.delete(feature);
+                    }
+                    applyOpenTypeFeatures();
+                });
+            }
+        });
+
+        function applyOpenTypeFeatures() {
+            const featureString = Array.from(activeFeatures)
+                .map(f => `"${f}" 1`)
+                .join(', ');
+            
+            customText.style.fontFeatureSettings = featureString || 'normal';
+            samplesView.style.fontFeatureSettings = featureString || 'normal';
+            gridView.style.fontFeatureSettings = featureString || 'normal';
+            
+            console.log('Applied OpenType features:', featureString);
+        }
+
+        // Stylistic Sets for selected text
+        const ssButtons = document.querySelectorAll('.ss-btn');
+        
+        ssButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const ssFeature = this.dataset.ss;
+                applyStylisticSetToSelection(ssFeature);
+            });
+        });
+
+        function applyStylisticSetToSelection(ssFeature) {
+            const selection = window.getSelection();
+            
+            if (!selection.rangeCount || selection.isCollapsed) {
+                alert('Please select some text first!');
+                return;
+            }
+
+            const range = selection.getRangeAt(0);
+            
+            // Check if selection is within customText
+            let container = range.commonAncestorContainer;
+            if (container.nodeType === Node.TEXT_NODE) {
+                container = container.parentNode;
+            }
+            
+            if (!customText.contains(container)) {
+                alert('Please select text in the editor!');
+                return;
+            }
+
+            // Extract the selected content
+            const selectedContent = range.extractContents();
+            
+            // Create a span with the stylistic set
+            const span = document.createElement('span');
+            span.className = 'ss-span';
+            span.style.fontFeatureSettings = `"${ssFeature}" 1`;
+            span.appendChild(selectedContent);
+            
+            // Insert the span
+            range.insertNode(span);
+            
+            // Clear selection
+            selection.removeAllRanges();
+            
+            console.log(`Applied ${ssFeature} to selected text`);
+        }
 
         // Generate character grid
         function generateCharacterGrid() {
@@ -778,6 +987,7 @@ abcdefghijklmnopqrstuvwxyz
 
         // Initialize
         applyStyles();
+        applyOpenTypeFeatures(); // Apply default OpenType features
         generateCharacterGrid();
         loadAvailableMasters();
         loadDownloadButtons();
