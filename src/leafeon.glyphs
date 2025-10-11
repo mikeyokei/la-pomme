@@ -88,7 +88,7 @@ TEHLYDIV TEHXVDIV ",
 HO,
 "HOE homa
 nnooHHOO",
-"rất Năm tư Tổng Sinh chuyển tinh Kim đánh vẫn San biểu chiếm Tọa thủy Tìm gặp quận Thế xây cơ tạo yếu hè phim đông được hiện nhà Minh châu tả trình điện phòng nên tranh tiền nhiệt Diện trạng chiến bố lượng nhiệm có chúng gồm trí vài thổ Bạn cấp Tàu phá Quy đó lưu Chú Phi vực cư thiết tự sư đội triển Cũng lòng con Mã Múi xuất ra Cuối Lỗi Bộ Nó hai động sử thuật An báo công phương với Yu loài cao của hình Thiếu Nam mà quân đồ lần Ông Đế"
+"̛ơn"
 );
 customParameters = (
 {
@@ -19232,7 +19232,7 @@ unicode = 7886;
 glyphname = Ohorn;
 kernLeft = KO_O;
 kernRight = KO_O;
-lastChange = "2025-10-11 14:43:46 +0000";
+lastChange = "2025-10-11 19:39:36 +0000";
 layers = (
 {
 anchors = (
@@ -19260,17 +19260,17 @@ ref = O;
 {
 closed = 1;
 nodes = (
-(472,630,o),
-(465,545,o),
-(371,545,c),
-(409,524,l),
-(460,513,o),
-(505,513,o),
-(527,561,cs),
-(552,615,o),
-(502,703,o),
-(419,640,c),
-(439,689,l)
+(512,630,o),
+(491,546,o),
+(368,546,c),
+(425,521,l),
+(481,510,o),
+(540,513,o),
+(562,561,cs),
+(587,615,o),
+(542,703,o),
+(459,640,c),
+(479,689,l)
 );
 }
 );
@@ -20371,16 +20371,36 @@ unicode = 7887;
 {
 glyphname = ohorn;
 kernLeft = KO_o;
-lastChange = "2025-10-11 19:09:20 +0000";
+lastChange = "2025-10-11 19:40:05 +0000";
 layers = (
 {
+hints = (
+{
+name = _corner.ink;
+origin = (1,9);
+type = Corner;
+}
+);
 layerId = m01;
 shapes = (
 {
 ref = o;
 },
 {
-ref = horncomb;
+closed = 1;
+nodes = (
+(455,544,o),
+(450,460,o),
+(356,460,c),
+(395,432,l),
+(438,420,o),
+(488,427,o),
+(508,470,cs),
+(535,529,o),
+(485,617,o),
+(402,554,c),
+(422,603,l)
+);
 }
 );
 width = 580;

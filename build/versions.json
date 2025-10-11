@@ -1,6 +1,12 @@
 {
   "DarumaPomme-Italic": [
     {
+      "timestamp": "2025-10-12-024134",
+      "path": "build/instance_ttf/DarumaPomme-Italic-2025-10-12-024134.ttf",
+      "date": "Oct 12, 2025 02:41 AM",
+      "filename": "DarumaPomme-Italic-2025-10-12-024134.ttf"
+    },
+    {
       "timestamp": "2025-10-12-022108",
       "path": "build/instance_ttf/DarumaPomme-Italic-2025-10-12-022108.ttf",
       "date": "Oct 12, 2025 02:21 AM",
@@ -14,6 +20,12 @@
     }
   ],
   "DarumaPomme-Regular": [
+    {
+      "timestamp": "2025-10-12-024134",
+      "path": "build/instance_ttf/DarumaPomme-Regular-2025-10-12-024134.ttf",
+      "date": "Oct 12, 2025 02:41 AM",
+      "filename": "DarumaPomme-Regular-2025-10-12-024134.ttf"
+    },
     {
       "timestamp": "2025-10-12-022108",
       "path": "build/instance_ttf/DarumaPomme-Regular-2025-10-12-022108.ttf",
@@ -29,6 +41,12 @@
   ],
   "Leafeon-Regular": [
     {
+      "timestamp": "2025-10-12-024134",
+      "path": "build/instance_ttf/Leafeon-Regular-2025-10-12-024134.ttf",
+      "date": "Oct 12, 2025 02:41 AM",
+      "filename": "Leafeon-Regular-2025-10-12-024134.ttf"
+    },
+    {
       "timestamp": "2025-10-12-022108",
       "path": "build/instance_ttf/Leafeon-Regular-2025-10-12-022108.ttf",
       "date": "Oct 12, 2025 02:21 AM",
@@ -42,6 +60,12 @@
     }
   ],
   "Pommiedemo2-Medium": [
+    {
+      "timestamp": "2025-10-12-024134",
+      "path": "build/instance_ttf/Pommiedemo2-Medium-2025-10-12-024134.ttf",
+      "date": "Oct 12, 2025 02:41 AM",
+      "filename": "Pommiedemo2-Medium-2025-10-12-024134.ttf"
+    },
     {
       "timestamp": "2025-10-12-022108",
       "path": "build/instance_ttf/Pommiedemo2-Medium-2025-10-12-022108.ttf",
