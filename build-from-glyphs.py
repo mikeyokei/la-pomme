@@ -220,11 +220,12 @@ def build_masters(glyphs_path, output_dir, timestamp=None):
         return False
 
 if __name__ == '__main__':
-    # Build all three La Pomme font variants
+    # Build all La Pomme font variants
     glyphs_files = [
         ('src/jardin.glyphs', 'Jardin'),
         ('src/leafeon.glyphs', 'Leafeon'),
-        ('src/pommie.glyphs', 'Pommie')
+        ('src/pommie.glyphs', 'Pommie'),
+        ('src/CroissantOne-Regular.glyphs', 'Croissant')
     ]
     output_dir = 'build'
     
