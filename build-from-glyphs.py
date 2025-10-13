@@ -249,6 +249,18 @@ if __name__ == '__main__':
         print(f"{'='*60}")
         cleanup_old_versions(output_dir, max_versions=3)
         generate_versions_json(output_dir)
+        
+        # Generate OTF exports manifest
+        try:
+            from pathlib import Path
+            import subprocess
+            manifest_script = Path(__file__).parent / 'generate-otf-manifest.py'
+            if manifest_script.exists():
+                subprocess.run([sys.executable, str(manifest_script)], check=True)
+            else:
+                print("⚠️ generate-otf-manifest.py not found, skipping OTF manifest generation")
+        except Exception as e:
+            print(f"⚠️ Error generating OTF manifest: {e}")
     
     print(f"\n{'='*60}")
     if all_success:

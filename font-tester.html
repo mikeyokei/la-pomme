@@ -1330,16 +1330,19 @@ abcdefghijklmnopqrstuvwxyz
             const versionSelectors = document.getElementById('versionSelectors');
             
             try {
-                // Try to load versions.json
+                // Try to load versions.json and otf-exports.json
                 const response = await fetch('build/versions.json');
+                const otfResponse = await fetch('build/otf-exports.json');
+                
                 if (response.ok) {
                     const versions = await response.json();
+                    const otfExports = otfResponse.ok ? await otfResponse.json() : {};
                     
                     // Store versions globally for version testing
                     availableVersions = versions;
                     
                     // Display quick download buttons for latest versions
-                    downloadContainer.innerHTML = '<div style="font-size: 9px; margin-bottom: 5px;">LATEST VERSIONS:</div>';
+                    downloadContainer.innerHTML = '';
                     
                     const fontDisplayNames = {
                         'Leafeon-Regular': 'Leafeon',
@@ -1348,8 +1351,13 @@ abcdefghijklmnopqrstuvwxyz
                         'Pommiedemo2-Medium': 'Pommie'
                     };
                     
-                    // Create download buttons for latest versions (in specific order)
                     const fontOrder = ['Leafeon-Regular', 'DarumaPomme-Regular', 'DarumaPomme-Italic', 'Pommiedemo2-Medium'];
+                    
+                    // TTF Version Section
+                    const ttfSection = document.createElement('div');
+                    ttfSection.innerHTML = '<div style="font-size: 9px; margin-bottom: 5px; font-weight: 600;">TTF VERSION (LATEST):</div>';
+                    
+                    // Create download buttons for latest TTF versions (in specific order)
                     for (const baseName of fontOrder) {
                         const versionList = versions[baseName];
                         if (!versionList) continue;
@@ -1362,8 +1370,36 @@ abcdefghijklmnopqrstuvwxyz
                             button.download = latest.filename;
                             button.className = 'download-btn';
                             button.textContent = `↓ ${displayName}`;
-                            downloadContainer.appendChild(button);
+                            ttfSection.appendChild(button);
                         }
+                    }
+                    
+                    downloadContainer.appendChild(ttfSection);
+                    
+                    // OTF Export Section (if any OTF files exist)
+                    if (Object.keys(otfExports).length > 0) {
+                        const otfSection = document.createElement('div');
+                        otfSection.style.marginTop = '10px';
+                        otfSection.innerHTML = '<div style="font-size: 9px; margin-bottom: 5px; font-weight: 600;">EXPORT VERSION (OTF):</div>';
+                        
+                        // Create download buttons for OTF exports (in specific order)
+                        for (const baseName of fontOrder) {
+                            const otfList = otfExports[baseName];
+                            if (!otfList || otfList.length === 0) continue;
+                            
+                            const otfFile = otfList[0]; // Should only be one per font
+                            const displayName = otfFile.display_name || fontDisplayNames[baseName] || baseName;
+                            
+                            const button = document.createElement('a');
+                            button.href = otfFile.path;
+                            button.download = otfFile.filename;
+                            button.className = 'download-btn';
+                            button.textContent = `↓ ${displayName} (${otfFile.date})`;
+                            button.title = `Modified: ${otfFile.date}`;
+                            otfSection.appendChild(button);
+                        }
+                        
+                        downloadContainer.appendChild(otfSection);
                     }
                     
                     // Create version selectors (in specific order)
