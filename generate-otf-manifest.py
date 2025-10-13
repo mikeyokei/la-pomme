@@ -35,6 +35,10 @@ def generate_otf_manifest(src_dir='src', output_dir='build'):
         'Pommiedemo2-Medium.otf': {
             'display_name': 'Pommie',
             'base_name': 'Pommiedemo2-Medium'
+        },
+        'CCC-Croissant-Regular.otf': {
+            'display_name': 'Croissant',
+            'base_name': 'CCC-Croissant-Regular'
         }
     }
     
