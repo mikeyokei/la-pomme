@@ -1348,165 +1348,78 @@ abcdefghijklmnopqrstuvwxyz
                 const response = await fetch('build/versions.json');
                 const otfResponse = await fetch('build/otf-exports.json');
                 
-                if (response.ok) {
-                    const versions = await response.json();
-                    const otfExports = otfResponse.ok ? await otfResponse.json() : {};
+                if (otfResponse.ok) {
+                    const otfExports = await otfResponse.json();
                     
-                    // Store versions globally for version testing
-                    availableVersions = versions;
-                    
-                    // Display quick download buttons for latest versions
+                    // Display OTF download buttons ONLY
                     downloadContainer.innerHTML = '';
                     
-                    const fontDisplayNames = {
-                        'Jardin-RoughenItalic': 'Jardin Roughen',
+                    const otfDisplayNames = {
+                        'Jardin-Roughen': 'Jardin Roughen',
                         'Jardin-Italic': 'Jardin Italic',
-                        'Jardin-roundedItalic': 'Jardin Rounded',
+                        'Jardin-rounded': 'Jardin Rounded',
                         'Leafeon-Regular': 'Leafeon',
-                        'Pommiedemo2-Medium': 'Pommie',
+                        'Leafeon01-Regular': 'Leafeon 01',
                         'CCC-Croissant-Regular': 'Croissant'
                     };
                     
-                    const fontOrder = ['Jardin-RoughenItalic', 'Jardin-Italic', 'Jardin-roundedItalic', 'Leafeon-Regular', 'Pommiedemo2-Medium', 'CCC-Croissant-Regular'];
+                    const otfOrder = ['Jardin-Roughen', 'Jardin-Italic', 'Jardin-rounded', 'Leafeon-Regular', 'Leafeon01-Regular', 'CCC-Croissant-Regular'];
                     
-                    // TTF Version Section
-                    const ttfSection = document.createElement('div');
-                    ttfSection.innerHTML = '<div style="font-size: 9px; margin-bottom: 5px; font-weight: 600;">TTF VERSION (LATEST):</div>';
-                    
-                    // Create download buttons for latest TTF versions (in specific order)
-                    for (const baseName of fontOrder) {
-                        const versionList = versions[baseName];
-                        if (!versionList) continue;
-                        if (versionList.length > 0) {
-                            const latest = versionList[0]; // First item is most recent
-                            const displayName = fontDisplayNames[baseName] || baseName;
-                            
-                            const button = document.createElement('a');
-                            button.href = latest.path;
-                            button.download = latest.filename;
-                            button.className = 'download-btn';
-                            button.textContent = `↓ ${displayName}`;
-                            ttfSection.appendChild(button);
-                        }
-                    }
-                    
-                    downloadContainer.appendChild(ttfSection);
-                    
-                    // OTF Export Section (if any OTF files exist)
+                    // OTF Section - Only show if OTF files exist
                     if (Object.keys(otfExports).length > 0) {
                         const otfSection = document.createElement('div');
-                        otfSection.style.marginTop = '10px';
-                        otfSection.innerHTML = '<div style="font-size: 9px; margin-bottom: 5px; font-weight: 600;">EXPORT VERSION (OTF):</div>';
+                        otfSection.innerHTML = '<div style="font-size: 9px; margin-bottom: 5px; font-weight: 600;">DOWNLOAD FONTS (OTF):</div>';
                         
                         // Create download buttons for OTF exports (in specific order)
-                        for (const baseName of fontOrder) {
+                        for (const baseName of otfOrder) {
                             const otfList = otfExports[baseName];
                             if (!otfList || otfList.length === 0) continue;
                             
                             const otfFile = otfList[0]; // Should only be one per font
-                            const displayName = otfFile.display_name || fontDisplayNames[baseName] || baseName;
+                            const displayName = otfDisplayNames[baseName] || otfFile.display_name || baseName;
                             
                             const button = document.createElement('a');
                             button.href = otfFile.path;
                             button.download = otfFile.filename;
                             button.className = 'download-btn';
-                            button.textContent = `↓ ${displayName} (${otfFile.date})`;
-                            button.title = `Modified: ${otfFile.date}`;
+                            button.textContent = `↓ ${displayName}`;
+                            button.title = `${displayName} - Modified: ${otfFile.date}`;
                             otfSection.appendChild(button);
                         }
                         
                         downloadContainer.appendChild(otfSection);
+                    } else {
+                        downloadContainer.innerHTML = '<span style="font-size: 9px; color: #666;">No OTF fonts available for download</span>';
                     }
-                    
-                    // Create version selectors (in specific order)
-                    versionSelectors.innerHTML = '';
-                    for (const baseName of fontOrder) {
-                        const versionList = versions[baseName];
-                        if (!versionList) continue;
-                        if (versionList.length > 0) {
-                            const displayName = fontDisplayNames[baseName] || baseName;
-                            
-                            const versionItem = document.createElement('div');
-                            versionItem.className = 'version-item';
-                            
-                            const nameLabel = document.createElement('div');
-                            nameLabel.className = 'version-item-name';
-                            nameLabel.textContent = displayName.toUpperCase();
-                            versionItem.appendChild(nameLabel);
-                            
-                            // Create select dropdown
-                            const select = document.createElement('select');
-                            select.className = 'version-select';
-                            select.dataset.baseName = baseName;
-                            
-                            versionList.forEach((version, index) => {
-                                const option = document.createElement('option');
-                                option.value = index;
-                                option.textContent = version.date + (index === 0 ? ' (Latest)' : '');
-                                option.dataset.path = version.path;
-                                option.dataset.filename = version.filename;
-                                select.appendChild(option);
-                            });
-                            
-                            versionItem.appendChild(select);
-                            
-                            // Create download button
-                            const downloadBtn = document.createElement('button');
-                            downloadBtn.className = 'version-download-btn';
-                            downloadBtn.textContent = '↓ Download Selected Version';
-                            downloadBtn.onclick = function() {
-                                const selectedOption = select.options[select.selectedIndex];
-                                const path = selectedOption.dataset.path;
-                                const filename = selectedOption.dataset.filename;
-                                
-                                // Create temporary link and trigger download
-                                const a = document.createElement('a');
-                                a.href = path;
-                                a.download = filename;
-                                document.body.appendChild(a);
-                                a.click();
-                                document.body.removeChild(a);
-                            };
-                            
-                            versionItem.appendChild(downloadBtn);
-                            versionSelectors.appendChild(versionItem);
-                        }
-                    }
-                    
-                    // Show version selector group
-                    versionSelectorGroup.style.display = 'block';
-                    
-                    // Update version test selector if a master is already selected
-                    updateVersionTestSelector();
-                    
-                    console.log(`✅ Loaded versions for ${Object.keys(versions).length} font(s)`);
                 } else {
-                    // versions.json not found, fall back to simple method
-                    console.log('⚠️ versions.json not found, using fallback method');
-                    await loadDownloadButtonsFallback();
+                    downloadContainer.innerHTML = '<span style="font-size: 9px; color: #666;">No fonts available for download</span>';
                 }
+                
+                // Hide version selector group (we only show OTF downloads)
+                versionSelectorGroup.style.display = 'none';
             } catch (e) {
                 console.error('Error loading versions:', e);
                 await loadDownloadButtonsFallback();
             }
         }
         
-        // Fallback method for loading fonts without versions.json
+        // Fallback method for loading fonts without otf-exports.json
         async function loadDownloadButtonsFallback() {
             const downloadContainer = document.getElementById('downloadButtons');
             
-            // List of all potential font files (latest versions) - Jardin Roughen first
+            // List of all potential OTF files - Jardin Roughen first
             const potentialFonts = [
-                { path: 'build/instance_ttf/Jardin-RoughenItalic.ttf', name: 'Jardin Roughen', format: 'TTF' },
-                { path: 'build/instance_ttf/Jardin-Italic.ttf', name: 'Jardin Italic', format: 'TTF' },
-                { path: 'build/instance_ttf/Jardin-roundedItalic.ttf', name: 'Jardin Rounded', format: 'TTF' },
-                { path: 'build/instance_ttf/Leafeon-Regular.ttf', name: 'Leafeon', format: 'TTF' },
-                { path: 'build/instance_ttf/Pommiedemo2-Medium.ttf', name: 'Pommie', format: 'TTF' }
+                { path: 'src/Jardin-Roughen.otf', name: 'Jardin Roughen', format: 'OTF' },
+                { path: 'src/Jardin-Italic.otf', name: 'Jardin Italic', format: 'OTF' },
+                { path: 'src/Jardin-rounded.otf', name: 'Jardin Rounded', format: 'OTF' },
+                { path: 'src/Leafeon-Regular.otf', name: 'Leafeon', format: 'OTF' },
+                { path: 'src/Leafeon01-Regular.otf', name: 'Leafeon 01', format: 'OTF' },
+                { path: 'src/CCC-Croissant-Regular.otf', name: 'Croissant', format: 'OTF' }
             ];
 
             const availableFonts = [];
             
-            // Check which fonts actually exist by trying to load them
+            // Check which OTF fonts actually exist by trying to load them
             for (const font of potentialFonts) {
                 try {
                     const testFont = new FontFace(`Test-${font.name}`, `url(${font.path})`);
@@ -1518,20 +1431,21 @@ abcdefghijklmnopqrstuvwxyz
                 }
             }
 
-            // Generate download buttons only for available fonts
+            // Generate download buttons only for available OTF fonts
             if (availableFonts.length === 0) {
-                downloadContainer.innerHTML = '<span style="font-size: 9px; color: #666;">No fonts available for download</span>';
+                downloadContainer.innerHTML = '<span style="font-size: 9px; color: #666;">No OTF fonts available for download</span>';
             } else {
-                downloadContainer.innerHTML = '';
+                downloadContainer.innerHTML = '<div style="font-size: 9px; margin-bottom: 5px; font-weight: 600;">DOWNLOAD FONTS (OTF):</div>';
                 availableFonts.forEach(font => {
                     const button = document.createElement('a');
                     button.href = font.path;
                     button.download = font.path.split('/').pop();
                     button.className = 'download-btn';
-                    button.textContent = `↓ ${font.name} (${font.format})`;
+                    button.textContent = `↓ ${font.name}`;
+                    button.title = `${font.name} - OTF Format`;
                     downloadContainer.appendChild(button);
                 });
-                console.log(`✅ Generated ${availableFonts.length} download buttons`);
+                console.log(`✅ Generated ${availableFonts.length} OTF download buttons`);
             }
         }
 
