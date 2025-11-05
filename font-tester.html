@@ -593,6 +593,16 @@
             overflow: visible;
         }
 
+        .pdf-proof {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+
+        .pdf-proof.active {
+            display: block;
+        }
+
         .left-panel .control-group label {
             font-size: 9px;
         }
@@ -694,6 +704,7 @@
                             <button class="view-btn active" data-view="custom">CUSTOM</button>
                             <button class="view-btn" data-view="samples">SAMPLES</button>
                             <button class="view-btn" data-view="grid">GRID</button>
+                            <button class="view-btn" data-view="proof">PROOF</button>
                         </div>
                     </div>
 
@@ -852,6 +863,11 @@ abcdefghijklmnopqrstuvwxyz
             <div id="gridView" class="character-grid">
                 <!-- JavaScript will populate this -->
             </div>
+
+            <!-- PDF Proof View -->
+            <div id="proofView" class="pdf-proof">
+                <iframe src="Font-Proof-Jardin-Roughen.pdf" width="100%" height="100%" style="border: none;"></iframe>
+            </div>
         </div>
             </div>
         </div>
@@ -873,6 +889,7 @@ abcdefghijklmnopqrstuvwxyz
         const customView = document.getElementById('customView');
         const samplesView = document.getElementById('samplesView');
         const gridView = document.getElementById('gridView');
+        const proofView = document.getElementById('proofView');
 
         // Preset buttons
         const presetButtons = document.querySelectorAll('.preset-btn');
@@ -896,6 +913,7 @@ abcdefghijklmnopqrstuvwxyz
                 customView.classList.remove('active');
                 samplesView.classList.remove('active');
                 gridView.classList.remove('active');
+                proofView.classList.remove('active');
 
                 if (view === 'custom') {
                     customView.classList.add('active');
@@ -903,6 +921,8 @@ abcdefghijklmnopqrstuvwxyz
                     samplesView.classList.add('active');
                 } else if (view === 'grid') {
                     gridView.classList.add('active');
+                } else if (view === 'proof') {
+                    proofView.classList.add('active');
                 }
             });
         });
