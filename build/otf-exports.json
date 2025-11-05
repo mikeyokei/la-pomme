@@ -28,11 +28,29 @@
   ],
   "Jardin-Italic": [
     {
-      "timestamp": "2025-10-16-145746",
+      "timestamp": "2025-11-05-135834",
       "path": "src/Jardin-Italic.otf",
-      "date": "Oct 16, 2025 02:57 PM",
+      "date": "Nov 05, 2025 01:58 PM",
       "filename": "Jardin-Italic.otf",
       "display_name": "Jardin-Italic"
+    }
+  ],
+  "Jardin-Roughen": [
+    {
+      "timestamp": "2025-11-05-135833",
+      "path": "src/Jardin-Roughen.otf",
+      "date": "Nov 05, 2025 01:58 PM",
+      "filename": "Jardin-Roughen.otf",
+      "display_name": "Jardin-Roughen"
+    }
+  ],
+  "Jardin-rounded": [
+    {
+      "timestamp": "2025-11-05-135833",
+      "path": "src/Jardin-rounded.otf",
+      "date": "Nov 05, 2025 01:58 PM",
+      "filename": "Jardin-rounded.otf",
+      "display_name": "Jardin-rounded"
     }
   ],
   "Leafeon-Regular": [
