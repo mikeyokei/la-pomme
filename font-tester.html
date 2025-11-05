@@ -1122,9 +1122,9 @@ abcdefghijklmnopqrstuvwxyz
         // Load available masters from build directory
         async function loadAvailableMasters() {
             const possibleMasters = [
+                { file: 'Jardin-RoughenItalic.ttf', name: 'JARDIN (ROUGHEN)', fontFamily: 'LaPomme-Jardin-RoughenItalic' },
                 { file: 'Jardin-Italic.ttf', name: 'JARDIN (ITALIC)', fontFamily: 'LaPomme-Jardin-Italic' },
                 { file: 'Jardin-roundedItalic.ttf', name: 'JARDIN (ROUNDED)', fontFamily: 'LaPomme-Jardin-roundedItalic' },
-                { file: 'Jardin-RoughenItalic.ttf', name: 'JARDIN (ROUGHEN)', fontFamily: 'LaPomme-Jardin-RoughenItalic' },
                 { file: 'Leafeon-Regular.ttf', name: 'LEAFEON', fontFamily: 'LaPomme-Leafeon-Regular' },
                 { file: 'Pommiedemo2-Medium.ttf', name: 'POMMIE', fontFamily: 'LaPomme-Pommiedemo2-Medium' },
                 { file: 'CCC-Croissant-Regular.ttf', name: 'CROISSANT', fontFamily: 'LaPomme-CCC-Croissant-Regular' }
@@ -1359,15 +1359,15 @@ abcdefghijklmnopqrstuvwxyz
                     downloadContainer.innerHTML = '';
                     
                     const fontDisplayNames = {
+                        'Jardin-RoughenItalic': 'Jardin Roughen',
                         'Jardin-Italic': 'Jardin Italic',
                         'Jardin-roundedItalic': 'Jardin Rounded',
-                        'Jardin-RoughenItalic': 'Jardin Roughen',
                         'Leafeon-Regular': 'Leafeon',
                         'Pommiedemo2-Medium': 'Pommie',
                         'CCC-Croissant-Regular': 'Croissant'
                     };
                     
-                    const fontOrder = ['Jardin-Italic', 'Jardin-roundedItalic', 'Jardin-RoughenItalic', 'Leafeon-Regular', 'Pommiedemo2-Medium', 'CCC-Croissant-Regular'];
+                    const fontOrder = ['Jardin-RoughenItalic', 'Jardin-Italic', 'Jardin-roundedItalic', 'Leafeon-Regular', 'Pommiedemo2-Medium', 'CCC-Croissant-Regular'];
                     
                     // TTF Version Section
                     const ttfSection = document.createElement('div');
@@ -1495,11 +1495,11 @@ abcdefghijklmnopqrstuvwxyz
         async function loadDownloadButtonsFallback() {
             const downloadContainer = document.getElementById('downloadButtons');
             
-            // List of all potential font files (latest versions) - Jardin first
+            // List of all potential font files (latest versions) - Jardin Roughen first
             const potentialFonts = [
+                { path: 'build/instance_ttf/Jardin-RoughenItalic.ttf', name: 'Jardin Roughen', format: 'TTF' },
                 { path: 'build/instance_ttf/Jardin-Italic.ttf', name: 'Jardin Italic', format: 'TTF' },
                 { path: 'build/instance_ttf/Jardin-roundedItalic.ttf', name: 'Jardin Rounded', format: 'TTF' },
-                { path: 'build/instance_ttf/Jardin-RoughenItalic.ttf', name: 'Jardin Roughen', format: 'TTF' },
                 { path: 'build/instance_ttf/Leafeon-Regular.ttf', name: 'Leafeon', format: 'TTF' },
                 { path: 'build/instance_ttf/Pommiedemo2-Medium.ttf', name: 'Pommie', format: 'TTF' }
             ];
@@ -1562,9 +1562,9 @@ abcdefghijklmnopqrstuvwxyz
         // Map master file names to base font names for versions
         function getMasterBaseName(masterFile) {
             const mapping = {
+                'Jardin-RoughenItalic.ttf': 'Jardin-RoughenItalic',
                 'Jardin-Italic.ttf': 'Jardin-Italic',
                 'Jardin-roundedItalic.ttf': 'Jardin-roundedItalic',
-                'Jardin-RoughenItalic.ttf': 'Jardin-RoughenItalic',
                 'Leafeon-Regular.ttf': 'Leafeon-Regular',
                 'Pommiedemo2-Medium.ttf': 'Pommiedemo2-Medium'
             };
