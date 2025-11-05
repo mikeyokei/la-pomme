@@ -8,13 +8,49 @@
       "display_name": "Croissant"
     }
   ],
+  "DarumaPomme-Italic": [
+    {
+      "timestamp": "2025-10-16-142521",
+      "path": "src/DarumaPomme-Italic.otf",
+      "date": "Oct 16, 2025 02:25 PM",
+      "filename": "DarumaPomme-Italic.otf",
+      "display_name": "Jardin Italic"
+    }
+  ],
+  "DarumaPomme-Regular": [
+    {
+      "timestamp": "2025-10-16-142521",
+      "path": "src/DarumaPomme-Regular.otf",
+      "date": "Oct 16, 2025 02:25 PM",
+      "filename": "DarumaPomme-Regular.otf",
+      "display_name": "Jardin Regular"
+    }
+  ],
+  "Jardin-Italic": [
+    {
+      "timestamp": "2025-10-16-145746",
+      "path": "src/Jardin-Italic.otf",
+      "date": "Oct 16, 2025 02:57 PM",
+      "filename": "Jardin-Italic.otf",
+      "display_name": "Jardin-Italic"
+    }
+  ],
   "Leafeon-Regular": [
     {
-      "timestamp": "2025-10-13-105312",
+      "timestamp": "2025-10-13-161650",
       "path": "src/Leafeon-Regular.otf",
-      "date": "Oct 13, 2025 10:53 AM",
+      "date": "Oct 13, 2025 04:16 PM",
       "filename": "Leafeon-Regular.otf",
       "display_name": "Leafeon"
+    }
+  ],
+  "Leafeon01-Regular": [
+    {
+      "timestamp": "2025-10-15-104244",
+      "path": "src/Leafeon01-Regular.otf",
+      "date": "Oct 15, 2025 10:42 AM",
+      "filename": "Leafeon01-Regular.otf",
+      "display_name": "Leafeon01-Regular"
     }
   ]
 }
