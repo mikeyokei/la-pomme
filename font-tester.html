@@ -1116,9 +1116,9 @@ abcdefghijklmnopqrstuvwxyz
         // Load available masters from build directory
         async function loadAvailableMasters() {
             const possibleMasters = [
-                { file: 'Leafeon-Regular.ttf', name: 'LEAFEON', fontFamily: 'LaPomme-Leafeon-Regular' },
                 { file: 'DarumaPomme-Regular.ttf', name: 'JARDIN (REGULAR)', fontFamily: 'LaPomme-DarumaPomme-Regular' },
                 { file: 'DarumaPomme-Italic.ttf', name: 'JARDIN (ITALIC)', fontFamily: 'LaPomme-DarumaPomme-Italic' },
+                { file: 'Leafeon-Regular.ttf', name: 'LEAFEON', fontFamily: 'LaPomme-Leafeon-Regular' },
                 { file: 'Pommiedemo2-Medium.ttf', name: 'POMMIE', fontFamily: 'LaPomme-Pommiedemo2-Medium' },
                 { file: 'CCC-Croissant-Regular.ttf', name: 'CROISSANT', fontFamily: 'LaPomme-CCC-Croissant-Regular' }
             ];
@@ -1352,14 +1352,14 @@ abcdefghijklmnopqrstuvwxyz
                     downloadContainer.innerHTML = '';
                     
                     const fontDisplayNames = {
-                        'Leafeon-Regular': 'Leafeon',
                         'DarumaPomme-Regular': 'Jardin Regular',
                         'DarumaPomme-Italic': 'Jardin Italic',
+                        'Leafeon-Regular': 'Leafeon',
                         'Pommiedemo2-Medium': 'Pommie',
                         'CCC-Croissant-Regular': 'Croissant'
                     };
                     
-                    const fontOrder = ['Leafeon-Regular', 'DarumaPomme-Regular', 'DarumaPomme-Italic', 'Pommiedemo2-Medium', 'CCC-Croissant-Regular'];
+                    const fontOrder = ['DarumaPomme-Regular', 'DarumaPomme-Italic', 'Leafeon-Regular', 'Pommiedemo2-Medium', 'CCC-Croissant-Regular'];
                     
                     // TTF Version Section
                     const ttfSection = document.createElement('div');
@@ -1487,7 +1487,7 @@ abcdefghijklmnopqrstuvwxyz
         async function loadDownloadButtonsFallback() {
             const downloadContainer = document.getElementById('downloadButtons');
             
-            // List of all potential font files (latest versions)
+            // List of all potential font files (latest versions) - Jardin first
             const potentialFonts = [
                 { path: 'build/instance_ttf/DarumaPomme-Regular.ttf', name: 'Jardin Regular', format: 'TTF' },
                 { path: 'build/instance_ttf/DarumaPomme-Italic.ttf', name: 'Jardin Italic', format: 'TTF' },
