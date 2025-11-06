@@ -13,40 +13,40 @@
             font-display: swap;
         }
 
-        /* Font faces - preload for better iOS compatibility */
+        /* Font faces - using OTF files directly from src/ */
         @font-face {
             font-family: 'LaPomme-Jardin-Italic';
-            src: url('build/instance_ttf/Jardin-Italic.ttf?v=2025110612v3') format('truetype');
+            src: url('src/Jardin-Italic.otf?v=otf') format('opentype');
             font-display: swap;
         }
         
         @font-face {
-            font-family: 'LaPomme-Jardin-roundedItalic';
-            src: url('build/instance_ttf/Jardin-roundedItalic.ttf?v=2025110612v3') format('truetype');
+            font-family: 'LaPomme-Jardin-rounded';
+            src: url('src/Jardin-rounded.otf?v=otf') format('opentype');
             font-display: swap;
         }
         
         @font-face {
-            font-family: 'LaPomme-Jardin-RoughenItalic';
-            src: url('build/instance_ttf/Jardin-RoughenItalic.ttf?v=2025110612v3') format('truetype');
+            font-family: 'LaPomme-Jardin-Roughen';
+            src: url('src/Jardin-Roughen.otf?v=otf') format('opentype');
             font-display: swap;
         }
         
         @font-face {
             font-family: 'LaPomme-Leafeon-Regular';
-            src: url('build/instance_ttf/Leafeon-Regular.ttf?v=2025110612v3') format('truetype');
+            src: url('src/Leafeon-Regular.otf?v=otf') format('opentype');
             font-display: swap;
         }
         
         @font-face {
-            font-family: 'LaPomme-Pommiedemo2-Medium';
-            src: url('build/instance_ttf/Pommiedemo2-Medium.ttf?v=2025110612v3') format('truetype');
+            font-family: 'LaPomme-Leafeon01-Regular';
+            src: url('src/Leafeon01-Regular.otf?v=otf') format('opentype');
             font-display: swap;
         }
         
         @font-face {
             font-family: 'LaPomme-CCC-Croissant-Regular';
-            src: url('build/instance_ttf/CCC-Croissant-Regular.ttf?v=2025110612v3') format('truetype');
+            src: url('src/CCC-Croissant-Regular.otf?v=otf') format('opentype');
             font-display: swap;
         }
 
@@ -1146,15 +1146,15 @@ abcdefghijklmnopqrstuvwxyz
             ).join('');
         }
 
-        // Load available masters from build directory
+        // Load available masters from src directory (OTF files)
         async function loadAvailableMasters() {
             const possibleMasters = [
-                { file: 'Jardin-RoughenItalic.ttf', name: 'JARDIN (ROUGHEN)', fontFamily: 'LaPomme-Jardin-RoughenItalic' },
-                { file: 'Jardin-Italic.ttf', name: 'JARDIN (ITALIC)', fontFamily: 'LaPomme-Jardin-Italic' },
-                { file: 'Jardin-roundedItalic.ttf', name: 'JARDIN (ROUNDED)', fontFamily: 'LaPomme-Jardin-roundedItalic' },
-                { file: 'Leafeon-Regular.ttf', name: 'LEAFEON', fontFamily: 'LaPomme-Leafeon-Regular' },
-                { file: 'Pommiedemo2-Medium.ttf', name: 'POMMIE', fontFamily: 'LaPomme-Pommiedemo2-Medium' },
-                { file: 'CCC-Croissant-Regular.ttf', name: 'CROISSANT', fontFamily: 'LaPomme-CCC-Croissant-Regular' }
+                { file: 'Jardin-Roughen.otf', name: 'JARDIN (ROUGHEN)', fontFamily: 'LaPomme-Jardin-Roughen' },
+                { file: 'Jardin-Italic.otf', name: 'JARDIN (ITALIC)', fontFamily: 'LaPomme-Jardin-Italic' },
+                { file: 'Jardin-rounded.otf', name: 'JARDIN (ROUNDED)', fontFamily: 'LaPomme-Jardin-rounded' },
+                { file: 'Leafeon-Regular.otf', name: 'LEAFEON', fontFamily: 'LaPomme-Leafeon-Regular' },
+                { file: 'Leafeon01-Regular.otf', name: 'LEAFEON 01', fontFamily: 'LaPomme-Leafeon01-Regular' },
+                { file: 'CCC-Croissant-Regular.otf', name: 'CROISSANT', fontFamily: 'LaPomme-CCC-Croissant-Regular' }
             ];
 
             const availableMasters = [];
@@ -1503,11 +1503,12 @@ abcdefghijklmnopqrstuvwxyz
         // Map master file names to base font names for versions
         function getMasterBaseName(masterFile) {
             const mapping = {
-                'Jardin-RoughenItalic.ttf': 'Jardin-RoughenItalic',
-                'Jardin-Italic.ttf': 'Jardin-Italic',
-                'Jardin-roundedItalic.ttf': 'Jardin-roundedItalic',
-                'Leafeon-Regular.ttf': 'Leafeon-Regular',
-                'Pommiedemo2-Medium.ttf': 'Pommiedemo2-Medium'
+                'Jardin-Roughen.otf': 'Jardin-Roughen',
+                'Jardin-Italic.otf': 'Jardin-Italic',
+                'Jardin-rounded.otf': 'Jardin-rounded',
+                'Leafeon-Regular.otf': 'Leafeon-Regular',
+                'Leafeon01-Regular.otf': 'Leafeon01-Regular',
+                'CCC-Croissant-Regular.otf': 'CCC-Croissant-Regular'
             };
             return mapping[masterFile] || null;
         }

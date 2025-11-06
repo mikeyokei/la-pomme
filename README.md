@@ -13,12 +13,11 @@ La Pomme is a modern typeface collection featuring three distinct variants: Jard
 
 **💻 Local Testing:**
 ```bash
-# Build fonts first
-python3 build-from-glyphs.py
-
-# Then open the tester
+# Simply open the tester - it uses OTF files directly from src/
 open font-tester.html
 ```
+
+> **Note:** The font tester now loads OTF files directly from the `src/` directory. No build step required for preview!
 
 **Features:**
 - Master selector (switch between Jardin, Leafeon, Pommie)
@@ -27,7 +26,7 @@ open font-tester.html
 - Custom text, samples, and character grid views
 - **OpenType Features** - toggle ligatures, contextual alternates, swashes, small caps, and more
 - **Stylistic Sets** - select text and apply stylistic sets (ss01-ss20) to specific characters
-- **Download fonts** - automatically detects available TTF and OTF files
+- **Download fonts** - automatically detects available OTF files from `src/` directory
 - Brutalist minimal design
 
 ## Installation
