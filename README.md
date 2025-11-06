@@ -1,6 +1,6 @@
 # La Pomme Font
 
-La Pomme is a modern typeface collection featuring three distinct variants: Jardin, Leafeon, and Pommie.
+La Pomme is a modern typeface collection featuring multiple distinctive styles: Extra Rough, Roughen, Italic, and Rounded variants, plus Leafeon and Croissant complementary fonts.
 
 ## 🎨 Font Tester
 
@@ -20,7 +20,7 @@ open font-tester.html
 > **Note:** The font tester now loads OTF files directly from the `src/` directory. No build step required for preview!
 
 **Features:**
-- Master selector (switch between Jardin, Leafeon, Pommie)
+- Master selector (switch between La Pomme styles: Extra Rough, Roughen, Italic, Rounded, plus Leafeon & Croissant)
 - **Upload & test fonts** - drag & drop or click to upload any font file (TTF, OTF, WOFF, WOFF2)
 - Size, spacing, and line height controls
 - Custom text, samples, and character grid views

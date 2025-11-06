@@ -15,20 +15,26 @@
 
         /* Font faces - using OTF files directly from src/ */
         @font-face {
-            font-family: 'LaPomme-Jardin-Italic';
-            src: url('src/Jardin-Italic.otf?v=otf') format('opentype');
+            font-family: 'LaPomme-ExtraRough';
+            src: url('src/LaPomme-ExtraRough.otf?v=otf') format('opentype');
             font-display: swap;
         }
         
         @font-face {
-            font-family: 'LaPomme-Jardin-rounded';
-            src: url('src/Jardin-rounded.otf?v=otf') format('opentype');
+            font-family: 'LaPomme-Roughen';
+            src: url('src/LaPomme-Roughen.otf?v=otf') format('opentype');
             font-display: swap;
         }
         
         @font-face {
-            font-family: 'LaPomme-Jardin-Roughen';
-            src: url('src/Jardin-Roughen.otf?v=otf') format('opentype');
+            font-family: 'LaPomme-Italic';
+            src: url('src/LaPomme-Italic.otf?v=otf') format('opentype');
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: 'LaPomme-Rounded';
+            src: url('src/LaPomme-rounded.otf?v=otf') format('opentype');
             font-display: swap;
         }
         
@@ -1149,9 +1155,10 @@ abcdefghijklmnopqrstuvwxyz
         // Load available masters from src directory (OTF files)
         async function loadAvailableMasters() {
             const possibleMasters = [
-                { file: 'Jardin-Roughen.otf', name: 'JARDIN (ROUGHEN)', fontFamily: 'LaPomme-Jardin-Roughen' },
-                { file: 'Jardin-Italic.otf', name: 'JARDIN (ITALIC)', fontFamily: 'LaPomme-Jardin-Italic' },
-                { file: 'Jardin-rounded.otf', name: 'JARDIN (ROUNDED)', fontFamily: 'LaPomme-Jardin-rounded' },
+                { file: 'LaPomme-ExtraRough.otf', name: 'LA POMME (EXTRA ROUGH)', fontFamily: 'LaPomme-ExtraRough' },
+                { file: 'LaPomme-Roughen.otf', name: 'LA POMME (ROUGHEN)', fontFamily: 'LaPomme-Roughen' },
+                { file: 'LaPomme-Italic.otf', name: 'LA POMME (ITALIC)', fontFamily: 'LaPomme-Italic' },
+                { file: 'LaPomme-rounded.otf', name: 'LA POMME (ROUNDED)', fontFamily: 'LaPomme-Rounded' },
                 { file: 'Leafeon-Regular.otf', name: 'LEAFEON', fontFamily: 'LaPomme-Leafeon-Regular' },
                 { file: 'Leafeon01-Regular.otf', name: 'LEAFEON 01', fontFamily: 'LaPomme-Leafeon01-Regular' },
                 { file: 'CCC-Croissant-Regular.otf', name: 'CROISSANT', fontFamily: 'LaPomme-CCC-Croissant-Regular' }
@@ -1503,9 +1510,10 @@ abcdefghijklmnopqrstuvwxyz
         // Map master file names to base font names for versions
         function getMasterBaseName(masterFile) {
             const mapping = {
-                'Jardin-Roughen.otf': 'Jardin-Roughen',
-                'Jardin-Italic.otf': 'Jardin-Italic',
-                'Jardin-rounded.otf': 'Jardin-rounded',
+                'LaPomme-ExtraRough.otf': 'LaPomme-ExtraRough',
+                'LaPomme-Roughen.otf': 'LaPomme-Roughen',
+                'LaPomme-Italic.otf': 'LaPomme-Italic',
+                'LaPomme-rounded.otf': 'LaPomme-rounded',
                 'Leafeon-Regular.otf': 'Leafeon-Regular',
                 'Leafeon01-Regular.otf': 'Leafeon01-Regular',
                 'CCC-Croissant-Regular.otf': 'CCC-Croissant-Regular'
