@@ -16,37 +16,37 @@
         /* Font faces - preload for better iOS compatibility */
         @font-face {
             font-family: 'LaPomme-Jardin-Italic';
-            src: url('build/instance_ttf/Jardin-Italic.ttf?v=20251106-123855') format('truetype');
+            src: url('build/instance_ttf/Jardin-Italic.ttf?v=2025110612v2') format('truetype');
             font-display: swap;
         }
         
         @font-face {
             font-family: 'LaPomme-Jardin-roundedItalic';
-            src: url('build/instance_ttf/Jardin-roundedItalic.ttf?v=20251106-123855') format('truetype');
+            src: url('build/instance_ttf/Jardin-roundedItalic.ttf?v=2025110612v2') format('truetype');
             font-display: swap;
         }
         
         @font-face {
             font-family: 'LaPomme-Jardin-RoughenItalic';
-            src: url('build/instance_ttf/Jardin-RoughenItalic.ttf?v=20251106-123855') format('truetype');
+            src: url('build/instance_ttf/Jardin-RoughenItalic.ttf?v=2025110612v2') format('truetype');
             font-display: swap;
         }
         
         @font-face {
             font-family: 'LaPomme-Leafeon-Regular';
-            src: url('build/instance_ttf/Leafeon-Regular.ttf?v=20251106-123855') format('truetype');
+            src: url('build/instance_ttf/Leafeon-Regular.ttf?v=2025110612v2') format('truetype');
             font-display: swap;
         }
         
         @font-face {
             font-family: 'LaPomme-Pommiedemo2-Medium';
-            src: url('build/instance_ttf/Pommiedemo2-Medium.ttf?v=20251106-123855') format('truetype');
+            src: url('build/instance_ttf/Pommiedemo2-Medium.ttf?v=2025110612v2') format('truetype');
             font-display: swap;
         }
         
         @font-face {
             font-family: 'LaPomme-CCC-Croissant-Regular';
-            src: url('build/instance_ttf/CCC-Croissant-Regular.ttf?v=20251106-123855') format('truetype');
+            src: url('build/instance_ttf/CCC-Croissant-Regular.ttf?v=2025110612v2') format('truetype');
             font-display: swap;
         }
 
@@ -866,7 +866,14 @@ abcdefghijklmnopqrstuvwxyz
 
             <!-- PDF Proof View -->
             <div id="proofView" class="pdf-proof">
-                <iframe src="Font-Proof-Jardin-Roughen.pdf?v=20251106" width="100%" height="100%" style="border: none;"></iframe>
+                <div style="padding: 10px; background: white; border-bottom: 1px solid black; display: flex; align-items: center; gap: 10px;">
+                    <label style="font-family: 'NaNRageSoft', sans-serif; font-size: 10px; font-weight: 600;">SELECT PROOF:</label>
+                    <select id="proofSelector" style="padding: 4px; border: 1px solid black; background: white; font-family: 'NaNRageSoft', sans-serif; font-size: 9px; font-weight: 400;">
+                        <option value="Font-Proof-Jardin-Roughen.pdf?v=20251106-2">Vietnamese Proof (Nov 6)</option>
+                        <option value="src/Font Proof Jardin Roughen 2025-11-05.pdf">Regular Proof (Nov 5)</option>
+                    </select>
+                </div>
+                <iframe id="proofFrame" src="Font-Proof-Jardin-Roughen.pdf?v=20251106-2" width="100%" height="100%" style="border: none;"></iframe>
             </div>
         </div>
             </div>
@@ -1591,6 +1598,17 @@ abcdefghijklmnopqrstuvwxyz
             if (leftPanel) {
                 leftPanel.classList.toggle('collapsed');
             }
+        }
+
+        // Proof PDF selector
+        const proofSelector = document.getElementById('proofSelector');
+        const proofFrame = document.getElementById('proofFrame');
+        
+        if (proofSelector && proofFrame) {
+            proofSelector.addEventListener('change', function() {
+                proofFrame.src = this.value;
+                console.log('Switched to proof:', this.value);
+            });
         }
 
         // Initialize
