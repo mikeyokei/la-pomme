@@ -32,9 +32,9 @@ def generate_otf_manifest(src_dir='src', output_dir='build'):
             'display_name': 'La Pomme Italic',
             'base_name': 'LaPomme-Italic'
         },
-        'LaPomme-rounded.otf': {
+        'LaPomme-Rounded.otf': {
             'display_name': 'La Pomme Rounded',
-            'base_name': 'LaPomme-rounded'
+            'base_name': 'LaPomme-Rounded'
         },
         'Leafeon-Regular.otf': {
             'display_name': 'Leafeon',
