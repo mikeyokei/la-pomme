@@ -20,21 +20,29 @@ def generate_otf_manifest(src_dir='src', output_dir='build'):
     
     # Map OTF filenames to display names and base names
     font_mapping = {
+        'LaPomme-ExtraRough.otf': {
+            'display_name': 'La Pomme Extra Rough',
+            'base_name': 'LaPomme-ExtraRough'
+        },
+        'LaPomme-Roughen.otf': {
+            'display_name': 'La Pomme Roughen',
+            'base_name': 'LaPomme-Roughen'
+        },
+        'LaPomme-Italic.otf': {
+            'display_name': 'La Pomme Italic',
+            'base_name': 'LaPomme-Italic'
+        },
+        'LaPomme-rounded.otf': {
+            'display_name': 'La Pomme Rounded',
+            'base_name': 'LaPomme-rounded'
+        },
         'Leafeon-Regular.otf': {
             'display_name': 'Leafeon',
             'base_name': 'Leafeon-Regular'
         },
-        'DarumaPomme-Regular.otf': {
-            'display_name': 'Jardin Regular',
-            'base_name': 'DarumaPomme-Regular'
-        },
-        'DarumaPomme-Italic.otf': {
-            'display_name': 'Jardin Italic',
-            'base_name': 'DarumaPomme-Italic'
-        },
-        'Pommiedemo2-Medium.otf': {
-            'display_name': 'Pommie',
-            'base_name': 'Pommiedemo2-Medium'
+        'Leafeon01-Regular.otf': {
+            'display_name': 'Leafeon 01',
+            'base_name': 'Leafeon01-Regular'
         },
         'CCC-Croissant-Regular.otf': {
             'display_name': 'Croissant',

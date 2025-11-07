@@ -8,31 +8,40 @@
       "display_name": "Croissant"
     }
   ],
-  "Jardin-Italic": [
+  "LaPomme-ExtraRough": [
     {
-      "timestamp": "2025-11-06-125141",
-      "path": "src/Jardin-Italic.otf",
-      "date": "Nov 06, 2025 12:51 PM",
-      "filename": "Jardin-Italic.otf",
-      "display_name": "Jardin-Italic"
+      "timestamp": "2025-11-06-200513",
+      "path": "src/LaPomme-ExtraRough.otf",
+      "date": "Nov 06, 2025 08:05 PM",
+      "filename": "LaPomme-ExtraRough.otf",
+      "display_name": "La Pomme Extra Rough"
     }
   ],
-  "Jardin-Roughen": [
+  "LaPomme-Italic": [
     {
-      "timestamp": "2025-11-06-125141",
-      "path": "src/Jardin-Roughen.otf",
-      "date": "Nov 06, 2025 12:51 PM",
-      "filename": "Jardin-Roughen.otf",
-      "display_name": "Jardin-Roughen"
+      "timestamp": "2025-11-06-200513",
+      "path": "src/LaPomme-Italic.otf",
+      "date": "Nov 06, 2025 08:05 PM",
+      "filename": "LaPomme-Italic.otf",
+      "display_name": "La Pomme Italic"
     }
   ],
-  "Jardin-rounded": [
+  "LaPomme-Roughen": [
     {
-      "timestamp": "2025-11-06-125141",
-      "path": "src/Jardin-rounded.otf",
-      "date": "Nov 06, 2025 12:51 PM",
-      "filename": "Jardin-rounded.otf",
-      "display_name": "Jardin-rounded"
+      "timestamp": "2025-11-06-200513",
+      "path": "src/LaPomme-Roughen.otf",
+      "date": "Nov 06, 2025 08:05 PM",
+      "filename": "LaPomme-Roughen.otf",
+      "display_name": "La Pomme Roughen"
+    }
+  ],
+  "LaPomme-rounded": [
+    {
+      "timestamp": "2025-11-06-200513",
+      "path": "src/LaPomme-rounded.otf",
+      "date": "Nov 06, 2025 08:05 PM",
+      "filename": "LaPomme-rounded.otf",
+      "display_name": "La Pomme Rounded"
     }
   ],
   "Leafeon-Regular": [
@@ -50,7 +59,7 @@
       "path": "src/Leafeon01-Regular.otf",
       "date": "Oct 15, 2025 10:42 AM",
       "filename": "Leafeon01-Regular.otf",
-      "display_name": "Leafeon01-Regular"
+      "display_name": "Leafeon 01"
     }
   ]
 }
